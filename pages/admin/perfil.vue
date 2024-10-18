@@ -1,6 +1,5 @@
 <template>
-  <v-container>
-    <h1>Perfil de Administrador</h1>
+  <v-container fluid>
     <v-form @submit.prevent="guardarCambios">
       <v-text-field
         v-model="perfil.nombre"

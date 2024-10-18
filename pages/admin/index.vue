@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <p>Bienvenido al panel de administración de PEDILO.</p>
   </v-container>
 </template>

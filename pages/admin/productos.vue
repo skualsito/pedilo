@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row class="mb-4">
       <v-col cols="12" class="d-flex justify-end">
         <v-btn color="primary" @click="abrirFormularioNuevoProducto">
