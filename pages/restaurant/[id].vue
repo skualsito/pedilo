@@ -5,7 +5,7 @@
         <h1 class="text-2xl font-bold mb-4">{{ restaurant.titulo }}</h1>
         <button
           @click="goBack"
-          class="bg-white text-black text-sm font-medium px-2 py-2 rounded-full shadow-md hover:bg-[#3e40bf] hover:text-white transition-all duration-100"
+          class="text-black text-sm font-medium px-2 py-2 rounded-full shadow-md hover:bg-[#3e40bf] hover:!text-white transition-all duration-100"
         >
           <MdiIcon name="close" :size="20" />
         </button>

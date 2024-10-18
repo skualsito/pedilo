@@ -12,14 +12,14 @@
       <div class="flex items-center justify-between">
         <button
           @click="$emit('decrease')"
-          class="bg-white text-gray-500 text-sm font-medium px-1 py-1 rounded-full shadow-md hover:bg-[#3e40bf] hover:text-white transition-all duration-100"
+          class="text-gray-500 text-sm font-medium px-1 py-1 rounded-full shadow-md hover:bg-[#3e40bf] hover:text-white transition-all duration-100"
         >
           <MdiIcon name="minus" :size="20" />
         </button>
         <span class="text-sm w-6 text-center">{{ quantity }}</span>
         <button
           @click="$emit('increase')"
-          class="bg-white text-gray-500 text-sm font-medium px-1 py-1 rounded-full shadow-md hover:bg-[#3e40bf] hover:text-white transition-all duration-100"
+          class="text-gray-500 text-sm font-medium px-1 py-1 rounded-full shadow-md hover:bg-[#3e40bf] hover:text-white transition-all duration-100"
         >
           <MdiIcon name="plus" :size="20" />
         </button>

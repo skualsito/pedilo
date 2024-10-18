@@ -1,0 +1,7 @@
+@layer vuetify, base, components, utilities;
+
+@import "vuetify/styles";
+
+@layer vuetify {
+  /* Aquí puedes poner todos los estilos de Vuetify */
+}

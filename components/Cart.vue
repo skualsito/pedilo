@@ -9,7 +9,7 @@
       <h1 class="text-xl font-semibold">Mi Orden</h1>
       <button
         @click="closeCart"
-        class="bg-white text-black text-sm font-medium px-2 py-2 rounded-full shadow-md hover:bg-[#3e40bf] hover:text-white transition-all duration-100"
+        class="text-black text-sm font-medium px-2 py-2 rounded-full shadow-md hover:bg-[#3e40bf] hover:!text-white transition-all duration-100"
       >
         <MdiIcon name="close" :size="20" />
       </button>
