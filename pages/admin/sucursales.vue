@@ -114,7 +114,7 @@ const headers = [
   { title: "Nombre", key: "nombre" },
   { title: "Dirección", key: "direccion" },
   { title: "Teléfono", key: "telefono" },
-  { title: "Acciones", key: "acciones", sortable: false },
+  { title: "Acciones", key: "acciones", sortable: false, align: "end" },
 ];
 
 const sucursales = ref([

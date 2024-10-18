@@ -1,5 +1,5 @@
 <template>
   <section>
-    <p>This page will be displayed at the /about route.</p>
+    <p>Esta es la pagina de perfil.</p>
   </section>
 </template>

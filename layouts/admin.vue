@@ -31,6 +31,16 @@
           Pedidos
         </NuxtLink>
         <NuxtLink
+          to="/admin/productos"
+          :class="[
+            $route.path === '/admin/productos' ? 'active-link' : '',
+            'flex items-center px-4 py-2 mt-2 text-sm hover:font-semibold hover:bg-gray-800',
+          ]"
+        >
+          <MdiIcon name="Food" class="w-5 h-5 mr-3" />
+          Productos
+        </NuxtLink>
+        <NuxtLink
           to="/admin/sucursales"
           :class="[
             $route.path === '/admin/sucursales' ? 'active-link' : '',
@@ -80,16 +90,25 @@
 
         <div class="flex items-center">
           <MdiIcon name="bell" class="text-gray-400 w-6 h-6 mr-6" />
-          <div class="flex items-center space-x-3">
+          <div v-if="user" class="flex items-center space-x-3">
             <img
-              :src="user?.profileImage || 'https://placehold.co/40x40'"
-              :alt="user?.name + ' avatar'"
+              :src="user.profileImage || 'https://placehold.co/40x40'"
+              :alt="`${user.name || 'Usuario'} avatar`"
               class="w-10 h-10 rounded-full"
             />
-            <span class="text-sm font-semibold text-gray-900">{{
-              user?.name
-            }}</span>
-            <MdiIcon name="chevron-down" class="text-gray-400" />
+            <span class="text-sm font-semibold text-gray-900">
+              {{ user.name || "Usuario" }}
+            </span>
+            <MdiIcon name="ChevronDown" class="text-gray-400" />
+          </div>
+          <div v-else class="flex items-center space-x-3">
+            <img
+              src="https://placehold.co/40x40"
+              alt="Avatar por defecto"
+              class="w-10 h-10 rounded-full"
+            />
+            <span class="text-sm font-semibold text-gray-900">Usuario</span>
+            <MdiIcon name="ChevronDown" class="text-gray-400" />
           </div>
         </div>
       </div>
@@ -104,7 +123,7 @@
 import { useAuthStore } from "@/store/authStore";
 
 const authStore = useAuthStore();
-const user = computed(() => authStore.user);
+const user = computed(() => authStore.user || null);
 </script>
 
 <style scoped>

@@ -114,7 +114,7 @@ const headers = [
   { title: "Nombre", key: "nombre" },
   { title: "Email", key: "email" },
   { title: "Rol", key: "rol" },
-  { title: "Acciones", key: "acciones", sortable: false },
+  { title: "Acciones", key: "acciones", sortable: false, align: "end" },
 ];
 
 const usuarios = ref([

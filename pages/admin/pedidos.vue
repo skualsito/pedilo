@@ -146,7 +146,7 @@ const headers = [
   { title: "Fecha", key: "fecha" },
   { title: "Total", key: "total" },
   { title: "Estado", key: "estado" },
-  { title: "Acciones", key: "acciones", sortable: false },
+  { title: "Acciones", key: "acciones", sortable: false, align: "end" },
 ];
 
 const pedidos = ref([
