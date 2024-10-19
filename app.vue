@@ -1,10 +1,13 @@
 <template>
-  <div>
-    <NuxtLayout>
-      <NuxtPage />
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
+<script setup>
+useHead({
+  viewport: "width=device-width, initial-scale=1.0",
+});
+</script>
 <style>
 .page-enter-active,
 .page-leave-active {

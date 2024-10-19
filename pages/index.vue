@@ -1,7 +1,9 @@
 <template>
   <div class="w-full flex py-4">
     <div class="w-full flex flex-col items-center justify-center">
-      <div class="w-full flex flex-row items-center justify-center py-5">
+      <div
+        class="w-full flex flex-row items-center sm:justify-center pb-5 overflow-x-auto"
+      >
         <Category
           v-for="(categoria, index) in categorias"
           :key="index"

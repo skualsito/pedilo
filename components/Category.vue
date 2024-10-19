@@ -1,11 +1,13 @@
 <template>
-  <div class="flex flex-col items-center mr-5 cursor-pointer group">
+  <div class="flex flex-col items-center mx-3 cursor-pointer group text-center">
     <div
       class="w-[80px] h-[80px] text-[#4F4F4F] rounded-2xl shadow-xl flex items-center justify-center group-hover:shadow-lg group-hover:bg-[#3e40bf] group-hover:text-white group-hover:shadow-black/40 transition-all duration-100"
     >
       <MdiIcon :name="icono" :size="24" />
     </div>
-    <span class="mt-2 text-sm">{{ titulo }}</span>
+    <span class="mt-2 text-xs sm:text-sm">
+      {{ titulo }}
+    </span>
   </div>
 </template>
 <script>

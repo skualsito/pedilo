@@ -1,5 +1,7 @@
 <template>
-  <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div
+    class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
+  >
     <div class="bg-white p-8 rounded-lg shadow-lg w-96">
       <h2 class="text-2xl font-bold mb-4">
         {{ isLogin ? "Iniciar sesión" : "Registrarse" }}

@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[1040px] mx-auto">
+  <div class="w-full max-w-[1056px] mx-auto px-4">
     <AppHeader @open-cart="handleOpenCart" />
     <slot />
     <Cart :isOpen="isCartOpen" @close="closeCart" />

@@ -1,8 +1,8 @@
 <template>
   <div
     :class="[
-      'w-[350px] bg-white rounded-lg shadow-lg p-6 fixed top-0 h-full flex flex-col transition-all duration-300',
-      isOpen ? 'right-0' : '-right-full',
+      'w-[350px] max-w-full bg-white rounded-lg shadow-lg z-30 p-6 fixed inset-y-0 right-0 h-full flex flex-col transition-transform ease-in-out transform duration-300',
+      isOpen ? 'translate-x-0' : 'translate-x-full',
     ]"
   >
     <div class="flex justify-between items-center mb-6">

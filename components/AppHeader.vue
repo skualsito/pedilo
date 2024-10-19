@@ -11,23 +11,6 @@
           </nuxt-link>
         </div>
 
-        <!-- Search Bar -->
-        <div
-          class="flex items-center w-[600px] bg-[rgb(244,245,247)] rounded-full px-4 py-2"
-        >
-          <MdiIcon name="magnify" :size="24" class="text-[#BDBDBD]" />
-          <input
-            type="text"
-            placeholder="Buscar un restaurante o comidas"
-            class="bg-transparent outline-none w-full pl-4 text-sm text-[#BDBDBD]"
-          />
-          <button
-            class="bg-[#3e40bf] text-white text-sm font-medium px-6 py-2 rounded-full"
-          >
-            Buscar
-          </button>
-        </div>
-
         <!-- Icons -->
         <div class="flex items-center space-x-4">
           <!-- Notification Icon -->
@@ -97,6 +80,24 @@
           </div>
         </div>
       </div>
+      <div class="w-full flex items-center justify-center">
+        <!-- Search Bar 244,245,247 -->
+        <div
+          class="flex items-center w-full max-w-[800px] bg-[rgb(244,245,247)] rounded-full pl-4 pr-2 py-2"
+        >
+          <MdiIcon name="magnify" :size="24" class="text-[#BDBDBD]" />
+          <input
+            type="text"
+            placeholder="Buscar un restaurante o comidas"
+            class="bg-transparent outline-none w-full pl-4 text-sm text-[#BDBDBD]"
+          />
+          <button
+            class="bg-[#3e40bf] text-white text-sm font-medium px-6 py-2 rounded-full hidden sm:flex"
+          >
+            Buscar
+          </button>
+        </div>
+      </div>
     </header>
 
     <!-- Modal de Login/Registro -->
@@ -135,6 +136,7 @@ export default {
     const showUserMenu = ref(false);
 
     function openCart() {
+      showUserMenu.value = false;
       cartStore.openCart();
     }
 
@@ -151,14 +153,17 @@ export default {
     }
 
     function goToAdmin() {
+      showUserMenu.value = false;
       router.push("/admin");
     }
 
     function goToProfile() {
+      showUserMenu.value = false;
       router.push("/perfil");
     }
 
     function logout() {
+      showUserMenu.value = false;
       authStore.logout();
     }
 
