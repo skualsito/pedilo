@@ -129,7 +129,7 @@ const navLinks = [
   { to: "/admin", icon: "Home", text: "Dashboard" },
   { to: "/admin/pedidos", icon: "ClipboardList", text: "Pedidos" },
   { to: "/admin/productos", icon: "Food", text: "Productos" },
-  { to: "/admin/sucursales", icon: "Silverware", text: "Sucursales" },
+  { to: "/admin/sucursales", icon: "StoreMarker", text: "Sucursales" },
   { to: "/admin/usuarios", icon: "AccountGroup", text: "Usuarios" },
 ];
 </script>

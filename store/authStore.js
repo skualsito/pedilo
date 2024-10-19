@@ -16,9 +16,8 @@ export const useAuthStore = defineStore("auth", {
       this.token = "token_simulado";
 
       // Guardar el token en localStorage si está disponible
-      if (typeof window !== "undefined" && window.localStorage) {
-        window.localStorage.setItem("auth_token", this.token);
-      }
+
+      localStorage.setItem("auth_token", this.token);
     },
     async register(email, password) {
       // Aquí iría la lógica de registro real
@@ -28,9 +27,7 @@ export const useAuthStore = defineStore("auth", {
       this.token = "token_simulado";
 
       // Guardar el token en localStorage si está disponible
-      if (typeof window !== "undefined" && window.localStorage) {
-        window.localStorage.setItem("auth_token", this.token);
-      }
+      localStorage.setItem("auth_token", this.token);
     },
     logout() {
       this.user = null;
@@ -38,16 +35,14 @@ export const useAuthStore = defineStore("auth", {
       this.token = null;
 
       // Eliminar el token de localStorage si está disponible
-      if (typeof window !== "undefined" && window.localStorage) {
-        window.localStorage.removeItem("auth_token");
-      }
+      localStorage.removeItem("auth_token");
     },
     async checkAuth() {
       this.isLoading = true;
       let token = null;
-      if (typeof window !== "undefined" && window.localStorage) {
-        token = window.localStorage.getItem("auth_token");
-      }
+
+      token = localStorage.getItem("auth_token");
+
       if (token) {
         try {
           // Aquí deberías verificar el token con tu backend

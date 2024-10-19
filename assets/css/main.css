@@ -1,6 +1,12 @@
-@layer vuetify, base, components;
+/* @layer vuetify, base, components; */
 
-/* @import "vuetify/styles"; */
+@import "vuetify/styles/elements/_global.sass";
+@import "vuetify/styles/elements/_index.sass";
+@import "vuetify/styles/elements/_blockquote.sass";
+@import "vuetify/styles/elements/_global.sass";
+@import "vuetify/styles/generic/_animations.scss";
+@import "vuetify/styles/generic/_transitions.scss";
+@import "vuetify/styles/generic/_index.scss";
 
 @layer vuetify {
 }
