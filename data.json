@@ -2,6 +2,7 @@
   "shops": [
     {
       "id": 1,
+      "calificacion": 4.2,
       "titulo": "BACÁN BURGER",
       "descripcion": "¡Plancha llena, corazón contento!",
       "descripcionLarga": "🖤 ¡Plancha llena, corazón contento! 🖤\n🍔 Burger lovers\n🕗 Martes a Domingo de 20:30 a 00:00 hs\n🏫 Salón abierto de Jueves a Domingo\n📩 Pedidos por MD",
@@ -123,6 +124,7 @@
     {
       "id": 2,
       "titulo": "HONDO",
+      "calificacion": 4,
       "descripcion": "Bistró de costa.",
       "descripcionLarga": "Bistró de costa.\nAbrimos de jueves a domingo 16:00\nCocina mediterránea + Vinos del mundo + Cocktelería.\nCosta Esmeralda | Nuevo paseo comercial",
       "instagram": "hondobistro",
@@ -230,6 +232,7 @@
     {
       "id": 3,
       "titulo": "ChillBeer",
+      "calificacion": 3.9,
       "descripcion": "🛸Antares, Peñon del Aguila, Tacuara, Bierhaus, Baum, Tragos y Comidas🛸",
       "descripcionLarga": "🛸Antares, Peñon del Aguila, Tacuara, Bierhaus, Baum, Tragos y Comidas🛸\nHorario: Jueves a Domingo de 20:00 - 03:30 🕒",
       "instagram": "chillbeer_oficial",

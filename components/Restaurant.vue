@@ -11,17 +11,24 @@
           class="bg-white rounded-xl shadow-2xl overflow-hidden flex flex-col h-[350px] transition-shadow duration-300 group-hover:shadow-black/40"
         >
           <div
-            class="flex justify-between items-center m-2 rounded-lg overflow-hidden"
+            class="relative flex justify-between items-center m-2 rounded-lg overflow-hidden"
           >
             <img
               :src="`/images/${shop.logo}`"
               alt="Restaurant"
               class="w-full h-48 object-cover"
             />
+            <div
+              v-if="shop.calificacion"
+              class="absolute bottom-2 right-2 bg-white bg-opacity-80 rounded-lg px-2 py-1 flex items-center"
+            >
+              <MdiIcon class="text-yellow-400 mr-1" name="star" :size="16" />
+              <span class="text-gray-600 text-sm">{{ shop.calificacion }}</span>
+            </div>
           </div>
           <div class="flex flex-col flex-grow">
             <div class="px-4">
-              <h3 class="text-lg font-semibold mb-2 line-clamp-1">
+              <h3 class="text-lg font-semibold line-clamp-1 mb-2">
                 {{ shop.titulo }}
               </h3>
               <p class="text-gray-600 text-sm mb-2 line-clamp-2">
