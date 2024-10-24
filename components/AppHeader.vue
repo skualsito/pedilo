@@ -3,7 +3,7 @@
     <header>
       <div class="w-full bg-white fixed top-0 left-0 right-0 z-30">
         <div
-          class="w-full mx-auto max-w-[1056px] h-[60px] flex items-center justify-between py-2"
+          class="w-full mx-auto max-w-[1056px] h-[60px] flex items-center justify-between py-2 px-4"
         >
           <!-- Logo -->
           <div class="flex items-center">

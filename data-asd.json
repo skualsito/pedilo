@@ -1,0 +1,365 @@
+{
+  "shops": [
+    {
+      "id": 1,
+      "calificacion": 4.2,
+      "titulo": "BACÁN BURGER",
+      "descripcion": "¡Plancha llena, corazón contento!",
+      "descripcionLarga": "🖤 ¡Plancha llena, corazón contento! 🖤\n🍔 Burger lovers\n🕗 Martes a Domingo de 20:30 a 00:00 hs\n🏫 Salón abierto de Jueves a Domingo\n📩 Pedidos por MD",
+      "instagram": "https://www.instagram.com/bacanburger/",
+      "whatsapp": "https://wa.me/5491130000000",
+      "facebook": "https://www.facebook.com/bacanburger",
+      "logo": "logo-bacan.jpg",
+      "back": "back-bacan.jpg",
+      "localidad": 8,
+      "delivery": true,
+      "takeaway": true,
+      "onsite": true,
+      "tipo": 1,
+      "direccion": "Chiozza 2260",
+      "direccionLink": "https://www.google.com/maps/place/BAC%C3%81N+BURGER/@-36.6931571,-56.6800996,17z/data=!3m1!4b1!4m5!3m4!1s0x959c6f3eb89e6ff9:0x41a255db920d7359!8m2!3d-36.6931614!4d-56.6779109",
+      "menu": [
+        {
+          "titulo": "Burgers",
+          "descripcion": "+ papas",
+          "items": [
+            {
+              "id": 1,
+              "titulo": "Chesse Burger",
+              "descripcion": "Blend de carne y queso cheddar",
+              "precio": "$1500",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 2,
+              "titulo": "Bacon cheese Burger",
+              "descripcion": "Blend de carne, queso cheddar, pancerta crocante y salsa bomb",
+              "precio": "$1700",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Panceta crocante", "cantidad": 1 },
+                { "nombre": "Salsa bomb", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 3,
+              "titulo": "American Burger",
+              "descripcion": "Blend de carne, cheddar, panceta crocante, tomate, lechuga, cebolla morada y salsa bomb",
+              "precio": "$1800",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Panceta crocante", "cantidad": 1 },
+                { "nombre": "Tomate", "cantidad": 1 },
+                { "nombre": "Lechuga", "cantidad": 1 },
+                { "nombre": "Cebolla morada", "cantidad": 1 },
+                { "nombre": "Salsa bomb", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 4,
+              "titulo": "Oklahoma Burger",
+              "descripcion": "Blend de carne, cheddar, Cebolla durante la cocción y pepinillos.",
+              "precio": "$1650",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Cebolla", "cantidad": 1 },
+                { "nombre": "Pepinillos", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 5,
+              "titulo": "Garlic Burger",
+              "descripcion": "Blend de carne, emmental, rúcula, tomate y mayoñesa de ajo",
+              "precio": "$1750",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso emmental", "cantidad": 1 },
+                { "nombre": "Rúcula", "cantidad": 1 },
+                { "nombre": "Tomate", "cantidad": 1 },
+                { "nombre": "Mayonesa de ajo", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 6,
+              "titulo": "Big Burger",
+              "descripcion": "Blend de carne, cheddar, lechugą, cebolla morada, pepinillos y bomb",
+              "precio": "$1900",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Lechuga", "cantidad": 1 },
+                { "nombre": "Cebolla morada", "cantidad": 1 },
+                { "nombre": "Pepinillos", "cantidad": 1 },
+                { "nombre": "Salsa bomb", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 7,
+              "titulo": "Quarter Burger",
+              "descripcion": "Blend de carne, chedda, cebolla morada, pepinillos, ketchup y mostaza",
+              "precio": "$1600",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Cebolla morada", "cantidad": 1 },
+                { "nombre": "Pepinillos", "cantidad": 1 },
+                { "nombre": "Ketchup", "cantidad": 1 },
+                { "nombre": "Mostaza", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 8,
+              "titulo": "Blue Onion Burger",
+              "descripcion": "Blend de carne, emmental, queso azul, panceta y cebolla durante la cocción",
+              "precio": "$1850",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso emmental", "cantidad": 1 },
+                { "nombre": "Queso azul", "cantidad": 1 },
+                { "nombre": "Panceta", "cantidad": 1 },
+                { "nombre": "Cebolla", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 9,
+              "titulo": "Typical Burger",
+              "descripcion": "Blend de carne, cheddar, panceta, cebolla caramelizada y huevo a la plancha",
+              "precio": "$1950",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Blend de carne", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Panceta", "cantidad": 1 },
+                { "nombre": "Cebolla caramelizada", "cantidad": 1 },
+                { "nombre": "Huevo a la plancha", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 10,
+              "titulo": "Veggie Burger",
+              "descripcion": "Medallón veggie de @lanegracalambaza emmental, espinaca, tomáte, palta, cebolla caramelizada y mayo de ajo",
+              "precio": "$1800",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Medallón veggie", "cantidad": 1 },
+                { "nombre": "Queso emmental", "cantidad": 1 },
+                { "nombre": "Espinaca", "cantidad": 1 },
+                { "nombre": "Tomate", "cantidad": 1 },
+                { "nombre": "Palta", "cantidad": 1 },
+                { "nombre": "Cebolla caramelizada", "cantidad": 1 },
+                { "nombre": "Mayonesa de ajo", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Bacán fries",
+          "items": [
+            {
+              "id": 11,
+              "titulo": "Porción de papas fritas",
+              "precio": "$800",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [{ "nombre": "Papas", "cantidad": 1 }]
+            },
+            {
+              "id": 12,
+              "titulo": "Porción de papas fritas con cheddar",
+              "precio": "$950",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Papas", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 13,
+              "titulo": "Porción de papas fritas con cheddar y bacon",
+              "precio": "$1100",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Papas", "cantidad": 1 },
+                { "nombre": "Queso cheddar", "cantidad": 1 },
+                { "nombre": "Bacon", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 14,
+              "titulo": "Porción de aros de cebolla",
+              "descripcion": "con dip de mayo de ajo",
+              "precio": "$900",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Aros de cebolla", "cantidad": 1 },
+                { "nombre": "Mayonesa de ajo", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 15,
+              "titulo": "Porción de tequeños",
+              "descripcion": "con dip de salsa de tomate",
+              "precio": "$950",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Tequeños", "cantidad": 1 },
+                { "nombre": "Salsa de tomate", "cantidad": 1 }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Custom Burger",
+          "descripcion": "de carne, veggie o NOT",
+          "items": [
+            {
+              "id": 16,
+              "titulo": "Elegí hasta cuatro ingredientes",
+              "descripcion": "Tomate, lechuga, cebolla morada, cebolla caramelizada, palta, rúcula, espinaca, huevo, cheddar, queso azul emmental, panceta, pepinillos",
+              "precio": "$2000",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Base a elección", "cantidad": 1 },
+                { "nombre": "Ingrediente 1", "cantidad": 1 },
+                { "nombre": "Ingrediente 2", "cantidad": 1 },
+                { "nombre": "Ingrediente 3", "cantidad": 1 },
+                { "nombre": "Ingrediente 4", "cantidad": 1 },
+                { "nombre": "Pan", "cantidad": 1 }
+              ]
+            }
+          ]
+        },
+        {
+          "titulo": "Aderezos",
+          "items": [
+            {
+              "id": 17,
+              "titulo": "Salsa BOMB",
+              "descripcion": "mayo, ketchup y mostaza",
+              "precio": "$200",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Mayonesa", "cantidad": 1 },
+                { "nombre": "Ketchup", "cantidad": 1 },
+                { "nombre": "Mostaza", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 18,
+              "titulo": "Mayo de ajo",
+              "precio": "$150",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [
+                { "nombre": "Mayonesa", "cantidad": 1 },
+                { "nombre": "Ajo", "cantidad": 1 }
+              ]
+            },
+            {
+              "id": 19,
+              "titulo": "Mayonesa",
+              "precio": "$100",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [{ "nombre": "Mayonesa", "cantidad": 1 }]
+            },
+            {
+              "id": 20,
+              "titulo": "Ketchup",
+              "precio": "$100",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [{ "nombre": "Ketchup", "cantidad": 1 }]
+            },
+            {
+              "id": 21,
+              "titulo": "Barbacoa",
+              "precio": "$150",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [{ "nombre": "Salsa barbacoa", "cantidad": 1 }]
+            },
+            {
+              "id": 22,
+              "titulo": "Salsa de tomate",
+              "precio": "$100",
+              "imagen": "hamburguesa.webp",
+              "ingredientes": [{ "nombre": "Salsa de tomate", "cantidad": 1 }]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "localidades": [
+    {
+      "id": 9,
+      "localidad": "Mar de Ajó"
+    },
+    {
+      "id": 8,
+      "localidad": "San Bernardo"
+    },
+    {
+      "id": 7,
+      "localidad": "La Lucila"
+    },
+    {
+      "id": 6,
+      "localidad": "Aguas Verdes"
+    },
+    {
+      "id": 5,
+      "localidad": "Costa del Este"
+    },
+    {
+      "id": 4,
+      "localidad": "Mar del Tuyú"
+    },
+    {
+      "id": 3,
+      "localidad": "Santa Teresita"
+    },
+    {
+      "id": 2,
+      "localidad": "Las Toninas"
+    },
+    {
+      "id": 1,
+      "localidad": "San Clemente"
+    },
+    {
+      "id": 10,
+      "localidad": "Costa Esmeralda"
+    }
+  ],
+  "tipos": [
+    {
+      "id": 1,
+      "tipo": "Gastronomicos"
+    },
+    {
+      "id": 2,
+      "tipo": "Otros"
+    }
+  ]
+}

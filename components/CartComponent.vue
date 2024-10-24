@@ -5,6 +5,7 @@
       <p class="text-sm text-gray-500">${{ price }} x {{ quantity }}</p>
       <button
         @click="openIngredientesModal"
+        v-if="ingredientes.length > 0"
         class="text-sm text-[#3e40bf] mt-1 hover:underline"
       >
         Modificar ingredientes
@@ -26,39 +27,14 @@
       </button>
     </div>
 
-    <!-- Modal de ingredientes -->
-    <div
-      v-if="showModal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4"
-    >
-      <div class="bg-white rounded-lg p-6 w-full max-w-md relative">
-        <button
-          @click="closeModal"
-          class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-        >
-          <MdiIcon name="close" :size="24" />
-        </button>
-        <h2 class="text-xl font-bold mb-4">Ingredientes {{ title }}</h2>
-        <IngredientesComponent
-          :ingredientes="localIngredientes"
-          @update="updateLocalIngredientes"
-        />
-        <div class="mt-6 flex justify-end">
-          <button
-            @click="closeModal"
-            class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2"
-          >
-            Cancelar
-          </button>
-          <button
-            @click="updateIngredientes"
-            class="bg-[#3e40bf] text-white px-4 py-2 rounded"
-          >
-            Actualizar
-          </button>
-        </div>
-      </div>
-    </div>
+    <IngredientesComponent
+      :ingredientes="ingredientes"
+      :showModal="showModal"
+      :title="title"
+      confirmButtonText="Actualizar"
+      @update="updateIngredientes"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -78,10 +54,8 @@ export default {
   },
   setup(props, { emit }) {
     const showModal = ref(false);
-    const localIngredientes = ref([]);
 
     const openIngredientesModal = () => {
-      localIngredientes.value = JSON.parse(JSON.stringify(props.ingredientes));
       showModal.value = true;
     };
 
@@ -89,34 +63,16 @@ export default {
       showModal.value = false;
     };
 
-    const removeIngrediente = (index) => {
-      if (localIngredientes.value[index].cantidad > 0) {
-        localIngredientes.value[index].cantidad--;
-      }
-    };
-
-    const addIngrediente = (index) => {
-      localIngredientes.value[index].cantidad++;
-    };
-
-    const updateIngredientes = () => {
-      emit("update-ingredientes", localIngredientes.value);
+    const updateIngredientes = (newIngredientes) => {
+      emit("update-ingredientes", newIngredientes);
       closeModal();
-    };
-
-    const updateLocalIngredientes = (newIngredientes) => {
-      localIngredientes.value = newIngredientes;
     };
 
     return {
       showModal,
-      localIngredientes,
       openIngredientesModal,
       closeModal,
-      removeIngrediente,
-      addIngrediente,
       updateIngredientes,
-      updateLocalIngredientes,
     };
   },
 };

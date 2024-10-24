@@ -33,8 +33,11 @@
                 {{ item.descripcion }}
               </p>
             </div>
-            <div class="flex items-center justify-between mt-auto">
-              <span v-if="item.precio" class="text-[#3e40bf] font-medium">
+            <div
+              class="flex items-center justify-between mt-auto"
+              v-if="item.precio"
+            >
+              <span class="text-[#3e40bf] font-medium">
                 {{ item.precio }}
               </span>
               <button
@@ -50,39 +53,14 @@
       </div>
     </div>
 
-    <!-- Modal de ingredientes -->
-    <div
-      v-if="showModal"
-      class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
-    >
-      <div class="bg-white rounded-lg p-6 w-full max-w-md relative">
-        <button
-          @click="closeModal"
-          class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-        >
-          <MdiIcon name="close" :size="24" />
-        </button>
-        <h2 class="text-xl font-bold mb-4">Ingredientes {{ item.titulo }}</h2>
-        <IngredientesComponent
-          :ingredientes="ingredientes"
-          @update="updateIngredientes"
-        />
-        <div class="mt-6 flex justify-end">
-          <button
-            @click="closeModal"
-            class="bg-gray-300 text-gray-700 px-4 py-2 rounded mr-2"
-          >
-            Cancelar
-          </button>
-          <button
-            @click="addToCartWithIngredientes"
-            class="bg-[#3e40bf] text-white px-4 py-2 rounded"
-          >
-            Continuar
-          </button>
-        </div>
-      </div>
-    </div>
+    <IngredientesComponent
+      :ingredientes="ingredientes"
+      :showModal="showModal"
+      :title="item.titulo"
+      confirmButtonText="Continuar"
+      @update="addToCartWithIngredientes"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -125,10 +103,12 @@ export default {
       return localidades[localidadId] || "Desconocida";
     },
     openModal() {
-      this.ingredientes = JSON.parse(
-        JSON.stringify(this.item.ingredientes || [])
-      );
-      this.showModal = true;
+      if (this.item.ingredientes && this.item.ingredientes.length > 0) {
+        this.ingredientes = JSON.parse(JSON.stringify(this.item.ingredientes));
+        this.showModal = true;
+      } else {
+        this.addToCart();
+      }
     },
     closeModal() {
       this.showModal = false;
@@ -141,19 +121,28 @@ export default {
     addIngrediente(index) {
       this.ingredientes[index].cantidad++;
     },
-    addToCartWithIngredientes() {
+    addToCart() {
       const cartStore = useCartStore();
       cartStore.addItem({
         id: this.item.id,
         title: this.item.titulo,
         price: parseFloat(this.item.precio.replace("$", "").replace(",", "")),
-        ingredientes: this.ingredientes,
+        ingredientes: [],
         restaurantName: this.$parent.restaurant.titulo,
+        restaurantId: this.$parent.restaurant.id, // Añadimos el ID del restaurante
+      });
+    },
+    addToCartWithIngredientes(updatedIngredientes) {
+      const cartStore = useCartStore();
+      cartStore.addItem({
+        id: this.item.id,
+        title: this.item.titulo,
+        price: parseFloat(this.item.precio.replace("$", "").replace(",", "")),
+        ingredientes: updatedIngredientes,
+        restaurantName: this.$parent.restaurant.titulo,
+        restaurantId: this.$parent.restaurant.id, // Añadimos el ID del restaurante
       });
       this.closeModal();
-    },
-    updateIngredientes(newIngredientes) {
-      this.ingredientes = newIngredientes;
     },
   },
 };

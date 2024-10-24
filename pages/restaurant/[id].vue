@@ -37,8 +37,8 @@
         <MdiIcon name="mapMarker" :size="20" class="mr-1" />
         <span class="text-gray-600">{{ restaurant.direccion }}</span>
       </p>
-      <div class="flex flex-row">
-        <div v-if="restaurant.whatsapp" class="mb-2 mr-2">
+      <div class="flex flex-col sm:flex-row">
+        <div v-if="restaurant.whatsapp" class="mb-2 mr-2 w-fit">
           <a
             :href="restaurant.whatsapp"
             target="_blank"
@@ -52,7 +52,7 @@
             </button>
           </a>
         </div>
-        <div v-if="restaurant.instagram" class="mb-2 mr-2">
+        <div v-if="restaurant.instagram" class="mb-2 mr-2 w-fit">
           <a
             :href="restaurant.instagram"
             target="_blank"
@@ -66,7 +66,7 @@
             </button>
           </a>
         </div>
-        <div v-if="restaurant.facebook" class="mb-2 mr-2">
+        <div v-if="restaurant.facebook" class="mb-2 mr-2 w-fit">
           <a
             :href="restaurant.facebook"
             target="_blank"
