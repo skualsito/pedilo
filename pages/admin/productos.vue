@@ -1,8 +1,12 @@
 <template>
   <v-container fluid>
     <v-row class="mb-4">
-      <v-col cols="12" class="d-flex justify-end">
-        <v-btn color="primary" @click="abrirFormularioNuevoProducto">
+      <v-col cols="12" class="flex justify-end">
+        <v-btn
+          color="primary"
+          @click="abrirFormularioNuevoProducto"
+          class="ms-auto"
+        >
           <v-icon start icon="mdi-plus"></v-icon>
           Nuevo Producto
         </v-btn>
@@ -28,7 +32,12 @@
       </template>
 
       <template v-slot:[`item.imagen`]="{ item }">
-        <v-img :src="item.imagen" height="50" width="50" cover></v-img>
+        <v-img
+          :src="item.imagen || 'https://via.placeholder.com/150'"
+          height="50"
+          width="50"
+          cover
+        ></v-img>
       </template>
 
       <template v-slot:[`item.acciones`]="{ item }">
@@ -71,7 +80,11 @@
       fullscreen
     >
       <v-card>
-        <v-toolbar dark color="primary">
+        <v-toolbar
+          dark
+          color="primary"
+          class="!fixed top-0 left-0 right-0 z-50"
+        >
           <v-btn icon dark @click="cerrarFormulario">
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -81,13 +94,13 @@
             <v-btn dark text @click="guardarProducto">Guardar</v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <v-card-text>
+        <v-card-text class="mt-16">
           <v-container>
             <v-form ref="formulario">
               <v-row>
-                <v-col cols="3">
-                  <v-row>
-                    <v-col cols="12" sm="6">
+                <v-col cols="12" sm="3">
+                  <v-row class="justify-center">
+                    <v-col cols="12" class="flex justify-center">
                       <v-avatar size="150" class="mt-2">
                         <v-img
                           :src="
@@ -99,9 +112,9 @@
                     </v-col>
                   </v-row>
                 </v-col>
-                <v-col cols="9">
+                <v-col cols="12" sm="9">
                   <v-row>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12">
                       <v-text-field
                         v-model="productoEditado.nombre"
                         label="Nombre"
@@ -109,40 +122,98 @@
                       ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="6">
                       <v-select
                         v-model="productoEditado.categoria"
                         :items="categorias"
                         label="Categoría"
                         required
-                      ></v-select>
+                      >
+                        <template v-slot:append>
+                          <v-btn
+                            icon
+                            size="small"
+                            color="primary"
+                            class="me-1"
+                            @click="abrirModalCategoria('categoria', 'agregar')"
+                          >
+                            <v-icon>mdi-plus</v-icon>
+                          </v-btn>
+                          <v-btn
+                            icon
+                            size="small"
+                            color="warning"
+                            class="me-1"
+                            @click="abrirModalCategoria('categoria', 'editar')"
+                            :disabled="!productoEditado.categoria"
+                          >
+                            <v-icon>mdi-pencil</v-icon>
+                          </v-btn>
+                          <v-btn
+                            icon
+                            size="small"
+                            color="error"
+                            @click="borrarCategoria('categoria')"
+                            :disabled="!productoEditado.categoria"
+                          >
+                            <v-icon>mdi-delete</v-icon>
+                          </v-btn>
+                        </template>
+                      </v-select>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="6">
                       <v-select
                         v-model="productoEditado.subcategoria"
                         :items="subcategorias"
                         label="Subcategoría"
                         required
-                      ></v-select>
+                      >
+                        <template v-slot:append>
+                          <v-btn
+                            icon
+                            size="small"
+                            color="primary"
+                            class="me-1"
+                            @click="
+                              abrirModalCategoria('subcategoria', 'agregar')
+                            "
+                          >
+                            <v-icon>mdi-plus</v-icon>
+                          </v-btn>
+                          <v-btn
+                            icon
+                            size="small"
+                            color="warning"
+                            class="me-1"
+                            @click="
+                              abrirModalCategoria('subcategoria', 'editar')
+                            "
+                            :disabled="!productoEditado.subcategoria"
+                          >
+                            <v-icon>mdi-pencil</v-icon>
+                          </v-btn>
+                          <v-btn
+                            icon
+                            size="small"
+                            color="error"
+                            @click="borrarCategoria('subcategoria')"
+                            :disabled="!productoEditado.subcategoria"
+                          >
+                            <v-icon>mdi-delete</v-icon>
+                          </v-btn>
+                        </template>
+                      </v-select>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6" md="6">
                       <v-text-field
                         v-model="productoEditado.precio"
                         label="Precio"
                         type="number"
+                        prefix="$"
                         required
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                      <v-select
-                        v-model="productoEditado.sucursales"
-                        :items="sucursales"
-                        label="Sucursales disponibles"
-                        multiple
-                        chips
-                      ></v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="12" md="6">
                       <v-file-input
                         v-model="imagenSeleccionada"
                         label="Imagen del producto"
@@ -193,16 +264,17 @@
                             <v-card-text>
                               <v-container>
                                 <v-row>
-                                  <v-col cols="12" sm="6">
+                                  <v-col cols="12">
                                     <v-text-field
                                       v-model="editedIngrediente.nombre"
                                       label="Nombre"
                                     ></v-text-field>
                                   </v-col>
-                                  <v-col cols="12" sm="6">
+                                  <v-col cols="12">
                                     <v-text-field
                                       v-model="editedIngrediente.precio"
                                       label="Precio"
+                                      prefix="$"
                                       type="number"
                                     ></v-text-field>
                                   </v-col>
@@ -260,6 +332,36 @@
             </v-form>
           </v-container>
         </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <!-- Nuevo modal para categorías y subcategorías -->
+    <v-dialog v-model="dialogoCategoria" max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">{{ tituloModalCategoria }}</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="categoriaEditada"
+                  :label="labelModalCategoria"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="cerrarModalCategoria"
+            >Cancelar</v-btn
+          >
+          <v-btn color="blue darken-1" text @click="guardarCategoria"
+            >Guardar</v-btn
+          >
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-container>
@@ -443,6 +545,87 @@ const previsualizarImagen = (event) => {
       previewImagen.value = e.target.result;
     };
     reader.readAsDataURL(file);
+  }
+};
+
+const dialogoCategoria = ref(false);
+const tipoCategoria = ref("");
+const accionCategoria = ref("");
+const categoriaEditada = ref("");
+const categoriaIndex = ref(-1);
+
+const tituloModalCategoria = computed(() => {
+  const tipo =
+    tipoCategoria.value === "categoria" ? "Categoría" : "Subcategoría";
+  const accion = accionCategoria.value === "agregar" ? "Nueva" : "Editar";
+  return `${accion} ${tipo}`;
+});
+
+const labelModalCategoria = computed(() => {
+  return tipoCategoria.value === "categoria"
+    ? "Nombre de la categoría"
+    : "Nombre de la subcategoría";
+});
+
+const abrirModalCategoria = (tipo, accion) => {
+  if (accion === "editar" && !productoEditado[tipo]) {
+    // No abrir el modal si no hay categoría/subcategoría seleccionada
+    return;
+  }
+
+  tipoCategoria.value = tipo;
+  accionCategoria.value = accion;
+  categoriaEditada.value = "";
+  categoriaIndex.value = -1;
+
+  if (accion === "editar") {
+    const lista = tipo === "categoria" ? categorias.value : subcategorias.value;
+    const seleccionada = productoEditado[tipo];
+    categoriaIndex.value = lista.indexOf(seleccionada);
+    categoriaEditada.value = seleccionada;
+  }
+
+  dialogoCategoria.value = true;
+};
+
+const cerrarModalCategoria = () => {
+  dialogoCategoria.value = false;
+};
+
+const guardarCategoria = () => {
+  if (categoriaEditada.value) {
+    const lista =
+      tipoCategoria.value === "categoria" ? categorias : subcategorias;
+
+    if (accionCategoria.value === "agregar") {
+      lista.value.push(categoriaEditada.value);
+    } else if (
+      accionCategoria.value === "editar" &&
+      categoriaIndex.value !== -1
+    ) {
+      lista.value[categoriaIndex.value] = categoriaEditada.value;
+    }
+
+    cerrarModalCategoria();
+  }
+};
+
+const borrarCategoria = (tipo) => {
+  if (!productoEditado[tipo]) {
+    // No hacer nada si no hay categoría/subcategoría seleccionada
+    return;
+  }
+
+  const lista = tipo === "categoria" ? categorias : subcategorias;
+  const seleccionada = productoEditado[tipo];
+  const index = lista.value.indexOf(seleccionada);
+
+  if (
+    index !== -1 &&
+    confirm(`¿Estás seguro de que quieres eliminar esta ${tipo}?`)
+  ) {
+    lista.value.splice(index, 1);
+    productoEditado[tipo] = "";
   }
 };
 </script>

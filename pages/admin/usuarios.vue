@@ -1,8 +1,12 @@
 <template>
   <v-container fluid>
     <v-row class="mb-4">
-      <v-col cols="12" class="d-flex justify-end">
-        <v-btn color="primary" @click="abrirFormularioNuevoUsuario">
+      <v-col cols="12" class="flex justify-end">
+        <v-btn
+          color="primary"
+          @click="abrirFormularioNuevoUsuario"
+          class="ms-auto"
+        >
           <v-icon start icon="mdi-plus"></v-icon>
           Nuevo Usuario
         </v-btn>
