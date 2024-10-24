@@ -1,6 +1,6 @@
 <template>
   <div class="py-4">
-    <div v-if="restaurant">
+    <div v-if="restaurant" class="relative">
       <div class="flex flex-col items-center mb-4">
         <div class="relative">
           <img
@@ -21,12 +21,12 @@
           {{ restaurant.titulo }}
         </h1>
       </div>
-      <div class="absolute top-4 right-4">
+      <div class="absolute top-0 left-0">
         <button
           @click="goBack"
           class="text-black text-sm font-medium px-2 py-2 rounded-full shadow-md hover:bg-[#3e40bf] hover:!text-white transition-all duration-100"
         >
-          <MdiIcon name="close" :size="20" />
+          <MdiIcon name="arrowLeft" :size="20" />
         </button>
       </div>
 
