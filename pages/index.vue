@@ -61,7 +61,7 @@
               :key="localidad"
               :value="localidad"
             >
-              {{ localidad }}
+              {{ getLocalidad(localidad) }}
             </option>
           </select>
         </div>
@@ -158,6 +158,23 @@ export default {
 
     aplicarFiltros() {
       this.cerrarModalFiltros();
+    },
+    getLocalidad(localidadId) {
+      const localidades = {
+        1: "San Clemente del Tuyú",
+        2: "Las Toninas",
+        3: "Santa Teresita",
+        4: "Mar del Tuyú",
+        5: "Costa del Este",
+        6: "Aguas Verdes",
+        7: "La Lucila del Mar",
+        8: "San Bernardo",
+        9: "Mar de Ajó",
+        10: "Nueva Atlantis",
+        11: "Punta Médanos",
+        12: "Pinar del Sol",
+      };
+      return localidades[localidadId] || "Desconocida";
     },
   },
   created() {

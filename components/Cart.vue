@@ -16,16 +16,23 @@
     </div>
 
     <div class="space-y-4">
-      <div>
-        <h3 class="text-sm text-[#3e40bf] font-semibold">BACÁN BURGUER</h3>
+      <div
+        v-for="(restaurantItems, restaurantName) in groupedCartItems"
+        :key="restaurantName"
+      >
+        <h3 class="text-sm text-[#3e40bf] font-semibold">
+          {{ restaurantName }}
+        </h3>
         <CartComponent
-          v-for="item in cartItems"
+          v-for="item in restaurantItems"
           :key="item.id"
           :title="item.title"
           :price="item.price"
           :quantity="item.quantity"
-          @increase="increaseQuantity(item.id)"
-          @decrease="decreaseQuantity(item.id)"
+          :ingredientes="item.ingredientes"
+          @increase="increaseQuantity(item)"
+          @decrease="decreaseQuantity(item)"
+          @update-ingredientes="updateIngredientes(item, $event)"
         />
       </div>
     </div>
@@ -52,6 +59,7 @@
 <script>
 import { useCartStore } from "@/store/cartStore";
 import { storeToRefs } from "pinia";
+import { computed } from "vue";
 import CartComponent from "./CartComponent.vue";
 
 export default {
@@ -62,28 +70,39 @@ export default {
     const cartStore = useCartStore();
     const { items: cartItems, isOpen, totalAmount } = storeToRefs(cartStore);
 
+    const groupedCartItems = computed(() => {
+      const grouped = {};
+      cartItems.value.forEach((item) => {
+        if (!grouped[item.restaurantName]) {
+          grouped[item.restaurantName] = [];
+        }
+        grouped[item.restaurantName].push(item);
+      });
+      return grouped;
+    });
+
     const closeCart = () => cartStore.closeCart();
-    const increaseQuantity = (itemId) =>
-      cartStore.updateQuantity(
-        itemId,
-        cartStore.items.find((item) => item.id === itemId).quantity + 1
-      );
-    const decreaseQuantity = (itemId) => {
-      const item = cartStore.items.find((item) => item.id === itemId);
+    const increaseQuantity = (item) =>
+      cartStore.updateQuantity(item, item.quantity + 1);
+    const decreaseQuantity = (item) => {
       if (item.quantity > 1) {
-        cartStore.updateQuantity(itemId, item.quantity - 1);
+        cartStore.updateQuantity(item, item.quantity - 1);
       } else {
-        cartStore.removeItem(itemId);
+        cartStore.removeItem(item);
       }
+    };
+    const updateIngredientes = (item, newIngredientes) => {
+      cartStore.updateIngredientes(item, newIngredientes);
     };
 
     return {
-      cartItems,
+      groupedCartItems,
       isOpen,
       totalAmount,
       closeCart,
       increaseQuantity,
       decreaseQuantity,
+      updateIngredientes,
     };
   },
 };

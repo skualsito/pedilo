@@ -2,16 +2,7 @@ import { defineStore } from "pinia";
 
 export const useCartStore = defineStore("cart", {
   state: () => ({
-    items: [
-      { id: 1, title: "Chesse Burguer", price: 10500, quantity: 2 },
-      { id: 2, title: "Blue Onion Burger", price: 12500, quantity: 1 },
-      {
-        id: 3,
-        title: "Porción de papas fritas con cheddar y bacon",
-        price: 8750,
-        quantity: 3,
-      },
-    ],
+    items: [],
     isOpen: false,
   }),
   getters: {
@@ -24,23 +15,65 @@ export const useCartStore = defineStore("cart", {
   },
   actions: {
     addItem(item) {
-      const existingItem = this.items.find((i) => i.id === item.id);
-      if (existingItem) {
-        existingItem.quantity++;
+      const existingItemIndex = this.items.findIndex(
+        (i) =>
+          i.id === item.id &&
+          i.restaurantName === item.restaurantName &&
+          JSON.stringify(i.ingredientes) === JSON.stringify(item.ingredientes)
+      );
+      if (existingItemIndex !== -1) {
+        this.items[existingItemIndex].quantity++;
       } else {
         this.items.push({ ...item, quantity: 1 });
       }
     },
-    removeItem(itemId) {
-      const index = this.items.findIndex((item) => item.id === itemId);
+    removeItem(item) {
+      const index = this.items.findIndex(
+        (i) =>
+          i.id === item.id &&
+          i.restaurantName === item.restaurantName &&
+          JSON.stringify(i.ingredientes) === JSON.stringify(item.ingredientes)
+      );
       if (index !== -1) {
         this.items.splice(index, 1);
       }
     },
-    updateQuantity(itemId, quantity) {
-      const item = this.items.find((i) => i.id === itemId);
-      if (item) {
-        item.quantity = quantity;
+    updateQuantity(item, quantity) {
+      const foundItem = this.items.find(
+        (i) =>
+          i.id === item.id &&
+          i.restaurantName === item.restaurantName &&
+          JSON.stringify(i.ingredientes) === JSON.stringify(item.ingredientes)
+      );
+      if (foundItem) {
+        foundItem.quantity = quantity;
+      }
+    },
+    updateIngredientes(item, newIngredientes) {
+      const index = this.items.findIndex(
+        (i) =>
+          i.id === item.id &&
+          i.restaurantName === item.restaurantName &&
+          JSON.stringify(i.ingredientes) === JSON.stringify(item.ingredientes)
+      );
+      if (index !== -1) {
+        // Si los ingredientes son diferentes, creamos un nuevo item
+        if (
+          JSON.stringify(this.items[index].ingredientes) !==
+          JSON.stringify(newIngredientes)
+        ) {
+          this.items.push({
+            ...this.items[index],
+            ingredientes: newIngredientes,
+            quantity: 1,
+          });
+          this.items[index].quantity--;
+          if (this.items[index].quantity === 0) {
+            this.items.splice(index, 1);
+          }
+        } else {
+          this.items[index].ingredientes = newIngredientes;
+        }
       }
     },
     openCart() {
