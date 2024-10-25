@@ -18,7 +18,7 @@
             :key="index"
             class="flex justify-between items-center mb-1 text-sm"
           >
-            <span>{{ ingrediente.nombre }}</span>
+            <span>{{ ingrediente.nombre }} x {{ ingrediente.precio }}</span>
             <div class="flex items-center">
               <button
                 @click="updateIngrediente(index, -1)"

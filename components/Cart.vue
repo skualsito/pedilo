@@ -46,7 +46,6 @@
     </div>
 
     <div v-else class="space-y-4 overflow-y-auto max-h-[calc(100vh-200px)]">
-      <h2 class="text-lg font-semibold">Detalle de la compra</h2>
       <div
         v-for="(restaurantItems, restaurantName) in groupedCartItems"
         :key="restaurantName"
@@ -71,6 +70,17 @@
           <p class="text-lg">Total</p>
           <p class="text-lg font-semibold text-black">${{ totalAmount }}</p>
         </div>
+      </div>
+
+      <!-- Nota del cliente -->
+      <div v-if="showSummary" class="space-y-2">
+        <h3 class="text-md font-semibold">Nota para el restaurante</h3>
+        <textarea
+          v-model="clientNote"
+          class="w-full p-2 border rounded-md"
+          rows="3"
+          placeholder="Agrega una nota para tu pedido (opcional)"
+        ></textarea>
       </div>
 
       <!-- Método de pago -->
@@ -115,6 +125,8 @@
         <button
           @click="procederAlPago"
           class="flex-1 bg-[#3e40bf] text-white py-3 rounded-lg flex items-center justify-center"
+          :class="{ 'opacity-80': Object.keys(groupedCartItems).length === 0 }"
+          :disabled="Object.keys(groupedCartItems).length === 0"
         >
           <span class="mr-2">{{
             showSummary ? "Pagar" : "Proceder al pago"
@@ -174,6 +186,7 @@ export default {
 
     const showSummary = ref(false);
     const paymentMethod = ref("");
+    const clientNote = ref("");
 
     const procederAlPago = () => {
       if (!showSummary.value) {
@@ -181,9 +194,11 @@ export default {
       } else if (paymentMethod.value) {
         // Aquí iría la lógica para procesar el pago
         console.log("Procesando pago con", paymentMethod.value);
+        console.log("Nota del cliente:", clientNote.value);
         // Resetear el estado después del pago
         showSummary.value = false;
         paymentMethod.value = "";
+        clientNote.value = ""; // Limpiar la nota
         // Vaciar el carrito
         cartStore.clearCart();
       } else {
@@ -194,6 +209,7 @@ export default {
     const volverAtras = () => {
       showSummary.value = false;
       paymentMethod.value = "";
+      clientNote.value = ""; // Limpiar la nota al volver atrás
     };
 
     return {
@@ -207,6 +223,7 @@ export default {
       getRestaurantId,
       showSummary,
       paymentMethod,
+      clientNote,
       procederAlPago,
       volverAtras,
     };

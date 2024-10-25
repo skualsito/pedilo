@@ -65,6 +65,12 @@
                 >
                   Perfil
                 </button>
+                <button
+                  @click="goToContact"
+                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-[#3e40bf] hover:text-white hover:rounded-t-md transition-all duration-100 w-full text-left"
+                >
+                  Contacto
+                </button>
                 <hr />
                 <button
                   @click="logout"
@@ -166,6 +172,11 @@ export default {
       router.push("/perfil");
     }
 
+    function goToContact() {
+      showUserMenu.value = false;
+      router.push("/contacto");
+    }
+
     function logout() {
       showUserMenu.value = false;
       authStore.logout();
@@ -184,6 +195,7 @@ export default {
       toggleUserMenu,
       goToAdmin,
       goToProfile,
+      goToContact,
       logout,
     };
   },

@@ -54,8 +54,28 @@
         </NuxtLink>
       </nav>
 
-      <div class="mt-auto flex h-12 border-t border-gray-700">
+      <div class="mt-auto flex pb-3 border-t border-gray-700 flex-col">
         <NuxtLink
+          to="/"
+          :class="[
+            'flex items-center px-4 py-2 mt-2 text-sm w-full hover:font-semibold hover:bg-gray-800',
+          ]"
+          @click="closeSidebarOnMobile"
+        >
+          <MdiIcon name="arrowLeft" class="w-5 h-5 mr-3" />
+          Volver al sitio
+        </NuxtLink>
+        <NuxtLink
+          to="/"
+          :class="[
+            'flex items-center px-4 py-2 mt-2 text-sm w-full hover:font-semibold hover:bg-gray-800',
+          ]"
+          @click="logout"
+        >
+          <MdiIcon name="Logout" class="w-5 h-5 mr-3" />
+          Cerrar sesión
+        </NuxtLink>
+        <!-- <NuxtLink
           to="/admin/perfil"
           :class="[
             $route.path === '/admin/perfil' ? 'active-link' : '',
@@ -65,7 +85,7 @@
         >
           <MdiIcon name="Account" class="w-5 h-5 mr-3" />
           Perfil
-        </NuxtLink>
+        </NuxtLink> -->
       </div>
     </div>
 
@@ -90,8 +110,10 @@
           <MdiIcon :name="isSidebarOpen ? 'Close' : 'Menu'" class="w-6 h-6" />
         </button>
 
-        <div class="relative">
-          <h1 class="text-2xl font-bold">
+        <div class="relative max-w-[calc(100%-130px)]">
+          <h1
+            class="text-2xl font-bold text-ellipsis overflow-hidden whitespace-nowrap"
+          >
             {{ $route.meta?.head?.title || "Panel de Administración" }}
           </h1>
         </div>
@@ -147,6 +169,11 @@ const closeSidebarOnMobile = () => {
     isSidebarOpen.value = false;
   }
 };
+
+function logout() {
+  closeSidebarOnMobile();
+  authStore.logout();
+}
 
 const navLinks = [
   { to: "/admin", icon: "Home", text: "Dashboard" },

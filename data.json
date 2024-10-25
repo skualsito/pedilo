@@ -30,9 +30,9 @@
               "precio": "$1500",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$200" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -42,11 +42,15 @@
               "precio": "$1700",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Panceta crocante", "cantidad": 1 },
-                { "nombre": "Salsa bomb", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$200" },
+                {
+                  "nombre": "Panceta crocante",
+                  "cantidad": 1,
+                  "precio": "$250"
+                },
+                { "nombre": "Salsa bomb", "cantidad": 1, "precio": "$100" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -56,14 +60,18 @@
               "precio": "$1800",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Panceta crocante", "cantidad": 1 },
-                { "nombre": "Tomate", "cantidad": 1 },
-                { "nombre": "Lechuga", "cantidad": 1 },
-                { "nombre": "Cebolla morada", "cantidad": 1 },
-                { "nombre": "Salsa bomb", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$200" },
+                {
+                  "nombre": "Panceta crocante",
+                  "cantidad": 1,
+                  "precio": "$250"
+                },
+                { "nombre": "Tomate", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Lechuga", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Cebolla morada", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Salsa bomb", "cantidad": 1, "precio": "$100" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -73,11 +81,11 @@
               "precio": "$1650",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Cebolla", "cantidad": 1 },
-                { "nombre": "Pepinillos", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$200" },
+                { "nombre": "Cebolla", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Pepinillos", "cantidad": 1, "precio": "$100" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -87,12 +95,16 @@
               "precio": "$1750",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso emmental", "cantidad": 1 },
-                { "nombre": "Rúcula", "cantidad": 1 },
-                { "nombre": "Tomate", "cantidad": 1 },
-                { "nombre": "Mayonesa de ajo", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso emmental", "cantidad": 1, "precio": "$250" },
+                { "nombre": "Rúcula", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Tomate", "cantidad": 1, "precio": "$50" },
+                {
+                  "nombre": "Mayonesa de ajo",
+                  "cantidad": 1,
+                  "precio": "$100"
+                },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -102,13 +114,13 @@
               "precio": "$1900",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Lechuga", "cantidad": 1 },
-                { "nombre": "Cebolla morada", "cantidad": 1 },
-                { "nombre": "Pepinillos", "cantidad": 1 },
-                { "nombre": "Salsa bomb", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$200" },
+                { "nombre": "Lechuga", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Cebolla morada", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Pepinillos", "cantidad": 1, "precio": "$100" },
+                { "nombre": "Salsa bomb", "cantidad": 1, "precio": "$100" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -118,13 +130,13 @@
               "precio": "$1600",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Cebolla morada", "cantidad": 1 },
-                { "nombre": "Pepinillos", "cantidad": 1 },
-                { "nombre": "Ketchup", "cantidad": 1 },
-                { "nombre": "Mostaza", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$200" },
+                { "nombre": "Cebolla morada", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Pepinillos", "cantidad": 1, "precio": "$100" },
+                { "nombre": "Ketchup", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Mostaza", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -134,12 +146,12 @@
               "precio": "$1850",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso emmental", "cantidad": 1 },
-                { "nombre": "Queso azul", "cantidad": 1 },
-                { "nombre": "Panceta", "cantidad": 1 },
-                { "nombre": "Cebolla", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso emmental", "cantidad": 1, "precio": "$250" },
+                { "nombre": "Queso azul", "cantidad": 1, "precio": "$250" },
+                { "nombre": "Panceta", "cantidad": 1, "precio": "$250" },
+                { "nombre": "Cebolla", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -149,12 +161,20 @@
               "precio": "$1950",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Blend de carne", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Panceta", "cantidad": 1 },
-                { "nombre": "Cebolla caramelizada", "cantidad": 1 },
-                { "nombre": "Huevo a la plancha", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                { "nombre": "Blend de carne", "cantidad": 1, "precio": "$500" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$200" },
+                { "nombre": "Panceta", "cantidad": 1, "precio": "$250" },
+                {
+                  "nombre": "Cebolla caramelizada",
+                  "cantidad": 1,
+                  "precio": "$100"
+                },
+                {
+                  "nombre": "Huevo a la plancha",
+                  "cantidad": 1,
+                  "precio": "$100"
+                },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -164,14 +184,26 @@
               "precio": "$1800",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Medallón veggie", "cantidad": 1 },
-                { "nombre": "Queso emmental", "cantidad": 1 },
-                { "nombre": "Espinaca", "cantidad": 1 },
-                { "nombre": "Tomate", "cantidad": 1 },
-                { "nombre": "Palta", "cantidad": 1 },
-                { "nombre": "Cebolla caramelizada", "cantidad": 1 },
-                { "nombre": "Mayonesa de ajo", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                {
+                  "nombre": "Medallón veggie",
+                  "cantidad": 1,
+                  "precio": "$400"
+                },
+                { "nombre": "Queso emmental", "cantidad": 1, "precio": "$250" },
+                { "nombre": "Espinaca", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Tomate", "cantidad": 1, "precio": "$50" },
+                { "nombre": "Palta", "cantidad": 1, "precio": "$150" },
+                {
+                  "nombre": "Cebolla caramelizada",
+                  "cantidad": 1,
+                  "precio": "$100"
+                },
+                {
+                  "nombre": "Mayonesa de ajo",
+                  "cantidad": 1,
+                  "precio": "$100"
+                },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             }
           ]
@@ -184,7 +216,9 @@
               "titulo": "Porción de papas fritas",
               "precio": "$800",
               "imagen": "hamburguesa.webp",
-              "ingredientes": [{ "nombre": "Papas", "cantidad": 1 }]
+              "ingredientes": [
+                { "nombre": "Papas", "cantidad": 1, "precio": "$800" }
+              ]
             },
             {
               "id": 12,
@@ -192,8 +226,8 @@
               "precio": "$950",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Papas", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 }
+                { "nombre": "Papas", "cantidad": 1, "precio": "$800" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -202,9 +236,9 @@
               "precio": "$1100",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Papas", "cantidad": 1 },
-                { "nombre": "Queso cheddar", "cantidad": 1 },
-                { "nombre": "Bacon", "cantidad": 1 }
+                { "nombre": "Papas", "cantidad": 1, "precio": "$800" },
+                { "nombre": "Queso cheddar", "cantidad": 1, "precio": "$150" },
+                { "nombre": "Bacon", "cantidad": 1, "precio": "$150" }
               ]
             },
             {
@@ -214,8 +248,12 @@
               "precio": "$900",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Aros de cebolla", "cantidad": 1 },
-                { "nombre": "Mayonesa de ajo", "cantidad": 1 }
+                {
+                  "nombre": "Aros de cebolla",
+                  "cantidad": 1,
+                  "precio": "$800"
+                },
+                { "nombre": "Mayonesa de ajo", "cantidad": 1, "precio": "$100" }
               ]
             },
             {
@@ -225,8 +263,8 @@
               "precio": "$950",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Tequeños", "cantidad": 1 },
-                { "nombre": "Salsa de tomate", "cantidad": 1 }
+                { "nombre": "Tequeños", "cantidad": 1, "precio": "$850" },
+                { "nombre": "Salsa de tomate", "cantidad": 1, "precio": "$100" }
               ]
             }
           ]
@@ -242,12 +280,16 @@
               "precio": "$2000",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Base a elección", "cantidad": 1 },
-                { "nombre": "Ingrediente 1", "cantidad": 1 },
-                { "nombre": "Ingrediente 2", "cantidad": 1 },
-                { "nombre": "Ingrediente 3", "cantidad": 1 },
-                { "nombre": "Ingrediente 4", "cantidad": 1 },
-                { "nombre": "Pan", "cantidad": 1 }
+                {
+                  "nombre": "Base a elección",
+                  "cantidad": 1,
+                  "precio": "$500"
+                },
+                { "nombre": "Ingrediente 1", "cantidad": 1, "precio": "$150" },
+                { "nombre": "Ingrediente 2", "cantidad": 1, "precio": "$150" },
+                { "nombre": "Ingrediente 3", "cantidad": 1, "precio": "$150" },
+                { "nombre": "Ingrediente 4", "cantidad": 1, "precio": "$150" },
+                { "nombre": "Pan", "cantidad": 1, "precio": "$150" }
               ]
             }
           ]
@@ -262,9 +304,9 @@
               "precio": "$200",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Mayonesa", "cantidad": 1 },
-                { "nombre": "Ketchup", "cantidad": 1 },
-                { "nombre": "Mostaza", "cantidad": 1 }
+                { "nombre": "Mayonesa", "cantidad": 1, "precio": "$70" },
+                { "nombre": "Ketchup", "cantidad": 1, "precio": "$70" },
+                { "nombre": "Mostaza", "cantidad": 1, "precio": "$60" }
               ]
             },
             {
@@ -273,8 +315,8 @@
               "precio": "$150",
               "imagen": "hamburguesa.webp",
               "ingredientes": [
-                { "nombre": "Mayonesa", "cantidad": 1 },
-                { "nombre": "Ajo", "cantidad": 1 }
+                { "nombre": "Mayonesa", "cantidad": 1, "precio": "$100" },
+                { "nombre": "Ajo", "cantidad": 1, "precio": "$50" }
               ]
             },
             {
@@ -282,28 +324,36 @@
               "titulo": "Mayonesa",
               "precio": "$100",
               "imagen": "hamburguesa.webp",
-              "ingredientes": [{ "nombre": "Mayonesa", "cantidad": 1 }]
+              "ingredientes": [
+                { "nombre": "Mayonesa", "cantidad": 1, "precio": "$100" }
+              ]
             },
             {
               "id": 20,
               "titulo": "Ketchup",
               "precio": "$100",
               "imagen": "hamburguesa.webp",
-              "ingredientes": [{ "nombre": "Ketchup", "cantidad": 1 }]
+              "ingredientes": [
+                { "nombre": "Ketchup", "cantidad": 1, "precio": "$100" }
+              ]
             },
             {
               "id": 21,
               "titulo": "Barbacoa",
               "precio": "$150",
               "imagen": "hamburguesa.webp",
-              "ingredientes": [{ "nombre": "Salsa barbacoa", "cantidad": 1 }]
+              "ingredientes": [
+                { "nombre": "Salsa barbacoa", "cantidad": 1, "precio": "$150" }
+              ]
             },
             {
               "id": 22,
               "titulo": "Salsa de tomate",
               "precio": "$100",
               "imagen": "hamburguesa.webp",
-              "ingredientes": [{ "nombre": "Salsa de tomate", "cantidad": 1 }]
+              "ingredientes": [
+                { "nombre": "Salsa de tomate", "cantidad": 1, "precio": "$100" }
+              ]
             }
           ]
         }

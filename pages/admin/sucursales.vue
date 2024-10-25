@@ -139,7 +139,7 @@
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark text color="secondary" @click="importarMenu">
-              Importar Menú Existente
+              Importar Menú
             </v-btn>
             <v-btn text @click="guardarMenu">Guardar</v-btn>
           </v-toolbar-items>
