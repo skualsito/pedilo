@@ -5,8 +5,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   // Verificar si estamos en el entorno del navegador
   if (typeof window !== "undefined") {
-    // Esperar a que se complete la verificación de autenticación
-    await authStore.checkAuth();
+    // Pasar la ruta actual al método checkAuth
+    await authStore.checkAuth(to.path);
 
     // Verificar la autenticación y si es administrador
     if (!authStore.isAuthenticated || !authStore.user?.isAdmin) {

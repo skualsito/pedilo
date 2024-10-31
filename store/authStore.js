@@ -9,35 +9,71 @@ export const useAuthStore = defineStore("auth", {
   }),
   actions: {
     async login(email, password) {
-      // Aquí iría la lógica de autenticación real
-      // Por ahora, simularemos un login exitoso con un usuario admin
-      this.user = { email, name: "Admin Usuario", isAdmin: true };
-      this.isAuthenticated = true;
-      this.token = "token_simulado";
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/auth/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          }
+        );
 
-      // Guardar el token en localStorage si está disponible
+        if (!response.ok) {
+          throw new Error("Error en la autenticación");
+        }
 
-      localStorage.setItem("auth_token", this.token);
+        const data = await response.json();
+
+        this.user = data.user;
+        this.isAuthenticated = true;
+        this.token = data.token;
+
+        localStorage.setItem("auth_token", this.token);
+      } catch (error) {
+        console.error("Error durante el login:", error);
+        throw error;
+      }
     },
     async register(email, password) {
-      // Aquí iría la lógica de registro real
-      // Por ahora, simularemos un registro exitoso
-      this.user = { email, name: "Nuevo Usuario" };
-      this.isAuthenticated = true;
-      this.token = "token_simulado";
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/auth/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, password }),
+          }
+        );
 
-      // Guardar el token en localStorage si está disponible
-      localStorage.setItem("auth_token", this.token);
+        if (!response.ok) {
+          throw new Error("Error en el registro");
+        }
+
+        const data = await response.json();
+
+        this.user = data.user;
+        this.isAuthenticated = true;
+        this.token = data.token;
+
+        localStorage.setItem("auth_token", this.token);
+      } catch (error) {
+        console.error("Error durante el registro:", error);
+        throw error;
+      }
     },
     logout() {
       this.user = null;
       this.isAuthenticated = false;
       this.token = null;
 
-      // Eliminar el token de localStorage si está disponible
       localStorage.removeItem("auth_token");
     },
-    async checkAuth() {
+    async checkAuth(route) {
       this.isLoading = true;
       let token = null;
 
@@ -45,16 +81,21 @@ export const useAuthStore = defineStore("auth", {
 
       if (token) {
         try {
-          // Aquí deberías verificar el token con tu backend
-          // Por ahora, simularemos que el token es válido
-          await new Promise((resolve) => setTimeout(resolve, 500)); // Simular una llamada al backend
-          this.token = token;
-          this.isAuthenticated = true;
-          this.user = {
-            email: "admin@example.com",
-            name: "Admin Usuario",
-            isAdmin: true,
-          };
+          const response = await fetch(
+            `${
+              import.meta.env.VITE_API_URL
+            }/dashboard/check-permission/${route}`,
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Error al verificar el token");
+          }
         } catch (error) {
           console.error("Error al verificar el token:", error);
           this.logout();

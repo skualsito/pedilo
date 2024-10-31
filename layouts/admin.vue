@@ -16,7 +16,7 @@
         </h1>
       </div>
 
-      <nav class="mt-10">
+      <nav class="mt-10 overflow-y-auto">
         <NuxtLink
           v-for="(link, index) in navLinks"
           :key="index"
@@ -122,7 +122,7 @@
           <MdiIcon name="bell" class="text-gray-400 w-6 h-6 mr-6" />
           <div v-if="user" class="flex items-center space-x-3">
             <img
-              :src="user.profileImage || 'https://placehold.co/40x40'"
+              :src="user.imagen || 'https://placehold.co/40x40'"
               :alt="`${user.name || 'Usuario'} avatar`"
               class="w-10 h-10 rounded-full"
             />

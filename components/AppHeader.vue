@@ -36,8 +36,8 @@
                 class="w-10 h-10 rounded-full overflow-hidden shadow-lg flex items-center justify-center cursor-pointer text-[#4F4F4F] hover:shadow-black/20 transition-all duration-100"
               >
                 <img
-                  v-if="user.profileImage"
-                  :src="user.profileImage"
+                  v-if="user.imagen"
+                  :src="user.imagen"
                   :alt="user.name"
                   class="w-full h-full object-cover"
                 />
@@ -136,6 +136,8 @@ export default {
     const router = useRouter();
 
     function getUserInitials(name) {
+      if (!name) return "U";
+      if (!name.includes(" ")) return name[0]?.toUpperCase() || "U";
       return name
         .split(" ")
         .map((n) => n[0])
