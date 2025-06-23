@@ -1,212 +1,311 @@
 <template>
-  <v-container fluid>
-    <div class="flex w-full justify-between items-center mb-4 ml-2">
-      <h2 class="text-xl font-bold">Pedidos Pendientes</h2>
-      <v-btn color="primary" @click="abrirFormularioNuevoPedido">
-        <v-icon start icon="mdi-plus"></v-icon>
-        Nuevo Pedido
-      </v-btn>
+  <div class="space-y-6">
+    <!-- Header Section -->
+    <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-lg">
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+      >
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">
+            Gestión de Pedidos
+          </h1>
+          <p class="text-gray-600">
+            Administra y monitorea todos los pedidos del sistema
+          </p>
+        </div>
+        <button
+          @click="abrirFormularioNuevoPedido"
+          class="bg-[#3e40bf] hover:bg-[#2d2e8f] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
+        >
+          <MdiIcon name="Plus" class="w-5 h-5" />
+          Nuevo Pedido
+        </button>
+      </div>
     </div>
-    <v-data-table
-      :headers="headers"
-      :items="pedidosPendientes"
-      :items-per-page="5"
-      :search="busqueda"
-      class="elevation-1 mb-8"
-    >
-      <template v-slot:top>
-        <v-text-field
+
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-600 text-sm font-medium">Pedidos Pendientes</p>
+            <p class="text-3xl font-bold text-gray-900">
+              {{ pedidosPendientes.length }}
+            </p>
+          </div>
+          <div class="bg-orange-100 rounded-full p-3">
+            <MdiIcon name="ClockOutline" class="w-8 h-8 text-orange-600" />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-600 text-sm font-medium">Pedidos Confirmados</p>
+            <p class="text-3xl font-bold text-gray-900">
+              {{ pedidosConfirmadosCount }}
+            </p>
+          </div>
+          <div class="bg-green-100 rounded-full p-3">
+            <MdiIcon name="CheckCircle" class="w-8 h-8 text-green-600" />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-600 text-sm font-medium">Total Ingresos</p>
+            <p class="text-3xl font-bold text-gray-900">${{ totalIngresos }}</p>
+          </div>
+          <div class="bg-blue-100 rounded-full p-3">
+            <MdiIcon name="CashMultiple" class="w-8 h-8 text-blue-600" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+      <div class="relative">
+        <MdiIcon name="Magnify" class="absolute left-4 text-gray-400 top-3.5" />
+        <input
           v-model="busqueda"
-          label="Buscar"
-          prepend-inner-icon="mdi-magnify"
-          single-line
-          hide-details
-          class="mb-4"
-        ></v-text-field>
-      </template>
+          type="text"
+          placeholder="Buscar pedidos..."
+          class="w-full bg-gray-50 border border-gray-300 rounded-xl pl-12 pr-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+        />
+      </div>
+    </div>
 
-      <template v-slot:[`item.estado`]="{ item }">
-        <v-chip :color="item.estado === 'Pendiente' ? 'warning' : 'success'">
-          {{ item.estado }}
-        </v-chip>
-      </template>
+    <!-- Pedidos Pendientes -->
+    <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-lg">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Pedidos Pendientes</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200">
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">ID</th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Cliente
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Fecha
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Total
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Estado
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="pedido in pedidosPendientes"
+              :key="pedido.id"
+              class="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200"
+            >
+              <td class="py-4 px-4 text-gray-900 font-medium">
+                #{{ pedido.id }}
+              </td>
+              <td class="py-4 px-4 text-gray-900">{{ pedido.cliente }}</td>
+              <td class="py-4 px-4 text-gray-600">
+                {{ formatDate(pedido.fecha) }}
+              </td>
+              <td class="py-4 px-4 text-gray-900 font-bold">
+                ${{ pedido.total }}
+              </td>
+              <td class="py-4 px-4">
+                <span
+                  class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium"
+                >
+                  {{ pedido.estado }}
+                </span>
+              </td>
+              <td class="py-4 px-4">
+                <div class="flex items-center gap-2">
+                  <button
+                    @click="verPedido(pedido)"
+                    class="bg-blue-100 hover:bg-blue-200 text-blue-700 hover:text-blue-800 p-2 rounded-lg transition-all duration-300"
+                    title="Ver"
+                  >
+                    <MdiIcon name="Eye" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click="imprimirPedido(pedido)"
+                    class="bg-purple-100 hover:bg-purple-200 text-purple-700 hover:text-purple-800 p-2 rounded-lg transition-all duration-300"
+                    title="Imprimir"
+                  >
+                    <MdiIcon name="Printer" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click="confirmarPedido(pedido)"
+                    class="bg-green-100 hover:bg-green-200 text-green-700 hover:text-green-800 p-2 rounded-lg transition-all duration-300"
+                    title="Confirmar"
+                  >
+                    <MdiIcon name="Check" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click="editarPedido(pedido)"
+                    class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 hover:text-yellow-800 p-2 rounded-lg transition-all duration-300"
+                    title="Editar"
+                  >
+                    <MdiIcon name="Pencil" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click="borrarPedido(pedido)"
+                    class="bg-red-100 hover:bg-red-200 text-red-700 hover:text-red-800 p-2 rounded-lg transition-all duration-300"
+                    title="Borrar"
+                  >
+                    <MdiIcon name="Delete" class="w-4 h-4" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-      <template v-slot:[`item.acciones`]="{ item }">
-        <v-btn
-          size="x-small"
-          color="primary"
-          class="me-2"
-          icon
-          @click="verPedido(item)"
-        >
-          <v-icon>mdi-eye</v-icon>
-          <v-tooltip activator="parent" location="top">Ver</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="info"
-          class="me-2"
-          icon
-          @click="imprimirPedido(item)"
-          v-if="item.estado === 'Pendiente'"
-        >
-          <v-icon>mdi-printer</v-icon>
-          <v-tooltip activator="parent" location="top">Imprimir</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="success"
-          class="me-2"
-          icon
-          @click="confirmarPedido(item)"
-          v-if="item.estado === 'Pendiente'"
-        >
-          <v-icon>mdi-check</v-icon>
-          <v-tooltip activator="parent" location="top">Confirmar</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="warning"
-          class="me-2"
-          icon
-          @click="editarPedido(item)"
-        >
-          <v-icon>mdi-pencil</v-icon>
-          <v-tooltip activator="parent" location="top">Editar</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="error"
-          class="me-2"
-          icon
-          @click="borrarPedido(item)"
-          v-if="item.estado === 'Pendiente'"
-        >
-          <v-icon>mdi-delete</v-icon>
-          <v-tooltip activator="parent" location="top">Borrar</v-tooltip>
-        </v-btn>
-      </template>
-    </v-data-table>
+    <!-- Últimos Pedidos Confirmados -->
+    <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-lg">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">
+        Últimos Pedidos Confirmados
+      </h2>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200">
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">ID</th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Cliente
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Fecha
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Total
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="pedido in ultimosPedidosConfirmados"
+              :key="pedido.id"
+              class="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200"
+            >
+              <td class="py-4 px-4 text-gray-900 font-medium">
+                #{{ pedido.id }}
+              </td>
+              <td class="py-4 px-4 text-gray-900">{{ pedido.cliente }}</td>
+              <td class="py-4 px-4 text-gray-600">
+                {{ formatDate(pedido.fecha) }}
+              </td>
+              <td class="py-4 px-4 text-gray-900 font-bold">
+                ${{ pedido.total }}
+              </td>
+              <td class="py-4 px-4">
+                <div class="flex items-center gap-2">
+                  <button
+                    @click="verPedido(pedido)"
+                    class="bg-blue-100 hover:bg-blue-200 text-blue-700 hover:text-blue-800 p-2 rounded-lg transition-all duration-300"
+                    title="Ver"
+                  >
+                    <MdiIcon name="Eye" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click="editarPedido(pedido)"
+                    class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 hover:text-yellow-800 p-2 rounded-lg transition-all duration-300"
+                    title="Editar"
+                  >
+                    <MdiIcon name="Pencil" class="w-4 h-4" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <h2 class="text-xl font-bold mb-4">Últimos 5 Pedidos Confirmados</h2>
-    <v-data-table
-      :headers="headersConfirmados"
-      :items="ultimosPedidosConfirmados"
-      :items-per-page="5"
-      class="elevation-1"
+    <!-- Modal de Formulario -->
+    <div
+      v-if="dialogoFormulario"
+      class="fixed inset-0 !mt-0 backdrop-blur-md bg-black/30 flex items-center justify-center z-50 p-4"
     >
-      <template v-slot:top>
-        <v-text-field
-          v-model="busqueda"
-          label="Buscar"
-          prepend-inner-icon="mdi-magnify"
-          single-line
-          hide-details
-          class="mb-4"
-        ></v-text-field>
-      </template>
+      <div class="bg-white rounded-3xl p-8 shadow-2xl w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">
+            {{ formularioTitulo }}
+          </h2>
+          <button
+            @click="cerrarFormulario"
+            class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-all duration-300"
+          >
+            <MdiIcon name="Close" :size="24" />
+          </button>
+        </div>
 
-      <template v-slot:[`item.estado`]="{ item }">
-        <v-chip :color="item.estado === 'Pendiente' ? 'warning' : 'success'">
-          {{ item.estado }}
-        </v-chip>
-      </template>
-
-      <template v-slot:[`item.acciones`]="{ item }">
-        <v-btn
-          size="x-small"
-          color="primary"
-          class="me-2"
-          icon
-          @click="verPedido(item)"
-        >
-          <v-icon>mdi-eye</v-icon>
-          <v-tooltip activator="parent" location="top">Ver</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="info"
-          class="me-2"
-          icon
-          @click="imprimirPedido(item)"
-          v-if="item.estado === 'Pendiente'"
-        >
-          <v-icon>mdi-printer</v-icon>
-          <v-tooltip activator="parent" location="top">Imprimir</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="success"
-          class="me-2"
-          icon
-          @click="confirmarPedido(item)"
-          v-if="item.estado === 'Pendiente'"
-        >
-          <v-icon>mdi-check</v-icon>
-          <v-tooltip activator="parent" location="top">Confirmar</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="warning"
-          class="me-2"
-          icon
-          @click="editarPedido(item)"
-        >
-          <v-icon>mdi-pencil</v-icon>
-          <v-tooltip activator="parent" location="top">Editar</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="error"
-          class="me-2"
-          icon
-          @click="borrarPedido(item)"
-          v-if="item.estado === 'Pendiente'"
-        >
-          <v-icon>mdi-delete</v-icon>
-          <v-tooltip activator="parent" location="top">Borrar</v-tooltip>
-        </v-btn>
-      </template>
-    </v-data-table>
-
-    <v-dialog v-model="dialogoFormulario" max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="text-h5">{{ formularioTitulo }}</span>
-        </v-card-title>
-        <v-card-text>
-          <v-form ref="formulario">
-            <v-text-field
+        <form @submit.prevent="guardarPedido" class="space-y-6">
+          <div>
+            <label class="block mb-2 text-gray-700 font-medium">Cliente</label>
+            <input
               v-model="pedidoEditado.cliente"
-              label="Cliente"
+              type="text"
               required
-            ></v-text-field>
-            <v-text-field
+              class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+              placeholder="Nombre del cliente"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-2 text-gray-700 font-medium">Fecha</label>
+            <input
               v-model="pedidoEditado.fecha"
-              label="Fecha"
               type="date"
               required
-            ></v-text-field>
-            <v-text-field
+              class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:border-purple-500 transition-all duration-300"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-2 text-gray-700 font-medium">Total</label>
+            <input
               v-model="pedidoEditado.total"
-              label="Total"
               type="number"
               required
-            ></v-text-field>
-          </v-form>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="cerrarFormulario"
-            >Cancelar</v-btn
-          >
-          <v-btn color="blue-darken-1" variant="text" @click="guardarPedido"
-            >Guardar</v-btn
-          >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-container>
+              class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+              placeholder="0.00"
+            />
+          </div>
+
+          <div class="flex gap-3 pt-4">
+            <button
+              type="button"
+              @click="cerrarFormulario"
+              class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-xl border border-gray-300 transition-all duration-300 font-medium"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="flex-1 bg-[#3e40bf] hover:bg-[#2d2e8f] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -217,24 +316,8 @@ definePageMeta({
     title: "Pedidos",
   },
 });
+
 import { ref, reactive, computed } from "vue";
-
-const headers = [
-  { title: "ID", key: "id" },
-  { title: "Cliente", key: "cliente" },
-  { title: "Fecha", key: "fecha" },
-  { title: "Total", key: "total" },
-  { title: "Estado", key: "estado" },
-  { title: "Acciones", key: "acciones", sortable: false, align: "end" },
-];
-
-const headersConfirmados = [
-  { title: "ID", key: "id" },
-  { title: "Cliente", key: "cliente" },
-  { title: "Fecha", key: "fecha" },
-  { title: "Total", key: "total" },
-  { title: "Acciones", key: "acciones", sortable: false, align: "end" },
-];
 
 const pedidos = ref([
   {
@@ -251,18 +334,55 @@ const pedidos = ref([
     total: 150,
     estado: "Pendiente",
   },
-  // Añade más pedidos aquí
+  {
+    id: 3,
+    cliente: "Carlos López",
+    fecha: "2023-05-01",
+    total: 200,
+    estado: "Confirmado",
+  },
+  {
+    id: 4,
+    cliente: "Ana Martínez",
+    fecha: "2023-05-03",
+    total: 75,
+    estado: "Confirmado",
+  },
+  {
+    id: 5,
+    cliente: "Luis Rodríguez",
+    fecha: "2023-05-04",
+    total: 300,
+    estado: "Pendiente",
+  },
 ]);
 
 const pedidosPendientes = computed(() => {
-  return pedidos.value.filter((pedido) => pedido.estado === "Pendiente");
+  return pedidos.value?.filter((pedido) => pedido.estado === "Pendiente") || [];
+});
+
+const pedidosConfirmadosCount = computed(() => {
+  return (
+    pedidos.value?.filter((pedido) => pedido.estado === "Confirmado").length ||
+    0
+  );
 });
 
 const ultimosPedidosConfirmados = computed(() => {
-  return pedidos.value
-    .filter((pedido) => pedido.estado === "Confirmado")
-    .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
-    .slice(0, 5);
+  return (
+    pedidos.value
+      ?.filter((pedido) => pedido.estado === "Confirmado")
+      .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
+      .slice(0, 5) || []
+  );
+});
+
+const totalIngresos = computed(() => {
+  return (
+    pedidos.value
+      ?.filter((pedido) => pedido.estado === "Confirmado")
+      .reduce((total, pedido) => total + pedido.total, 0) || 0
+  );
 });
 
 const dialogoFormulario = ref(false);
@@ -276,6 +396,14 @@ const pedidoEditado = reactive({
 
 const busqueda = ref("");
 
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString("es-ES", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
 const abrirFormularioNuevoPedido = () => {
   formularioTitulo.value = "Nuevo Pedido";
   pedidoEditado.id = null;
@@ -286,18 +414,18 @@ const abrirFormularioNuevoPedido = () => {
 };
 
 const verPedido = (item) => {
-  // Implementa la lógica para ver el pedido
   console.log("Ver pedido:", item);
+  // Implementa la lógica para ver el pedido
 };
 
 const imprimirPedido = (item) => {
-  // Implementa la lógica para imprimir el pedido
   console.log("Imprimir pedido:", item);
+  // Implementa la lógica para imprimir el pedido
 };
 
 const confirmarPedido = (item) => {
   item.estado = "Confirmado";
-  item.fechaConfirmacion = new Date().toISOString().split("T")[0]; // Añadir fecha de confirmación
+  item.fechaConfirmacion = new Date().toISOString().split("T")[0];
 };
 
 const editarPedido = (item) => {
@@ -310,8 +438,8 @@ const editarPedido = (item) => {
 };
 
 const borrarPedido = (item) => {
-  // Implementa la lógica para borrar el pedido
   console.log("Borrar pedido:", item);
+  // Implementa la lógica para borrar el pedido
 };
 
 const cerrarFormulario = () => {
@@ -319,7 +447,6 @@ const cerrarFormulario = () => {
 };
 
 const guardarPedido = () => {
-  // Implementa la lógica para guardar el pedido
   console.log("Guardar pedido:", pedidoEditado);
   cerrarFormulario();
 };

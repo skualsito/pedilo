@@ -2,34 +2,48 @@ import { defineStore } from "pinia";
 
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    user: null,
-    isAuthenticated: false,
-    token: null,
+    user: {
+      id: 1,
+      nombre: "Juan",
+      email: "juan@gmail.com",
+      rol: "admin",
+      isAdmin: true,
+    },
+    isAuthenticated: true,
+    token: "asdasd123",
     isLoading: true,
   }),
   actions: {
     async login(email, password) {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/auth/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email, password }),
-          }
-        );
+        // const response = await fetch(
+        //   `${import.meta.env.VITE_API_URL}/auth/login`,
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({ email, password }),
+        //   }
+        // );
 
-        if (!response.ok) {
-          throw new Error("Error en la autenticación");
-        }
+        // if (!response.ok) {
+        //   throw new Error("Error en la autenticación");
+        // }
 
-        const data = await response.json();
+        // const data = await response.json();
 
-        this.user = data.user;
+        // this.user = data.user;
         this.isAuthenticated = true;
-        this.token = data.token;
+        // this.token = data.token;
+        this.token = "1234567890";
+        this.user = {
+          id: 1,
+          nombre: "Juan",
+          email: "juan@gmail.com",
+          rol: "admin",
+          isAdmin: true,
+        };
 
         localStorage.setItem("auth_token", this.token);
       } catch (error) {
@@ -79,31 +93,31 @@ export const useAuthStore = defineStore("auth", {
 
       token = localStorage.getItem("auth_token");
 
-      if (token) {
-        try {
-          const response = await fetch(
-            `${
-              import.meta.env.VITE_API_URL
-            }/dashboard/check-permission/${route}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
+      // if (token) {
+      //   try {
+      //     const response = await fetch(
+      //       `${
+      //         import.meta.env.VITE_API_URL
+      //       }/dashboard/check-permission/${route}`,
+      //       {
+      //         method: "GET",
+      //         headers: {
+      //           Authorization: `Bearer ${token}`,
+      //         },
+      //       }
+      //     );
 
-          if (!response.ok) {
-            throw new Error("Error al verificar el token");
-          }
-        } catch (error) {
-          console.error("Error al verificar el token:", error);
-          this.logout();
-        }
-      } else {
-        this.logout();
-      }
-      this.isLoading = false;
+      //     if (!response.ok) {
+      //       throw new Error("Error al verificar el token");
+      //     }
+      //   } catch (error) {
+      //     console.error("Error al verificar el token:", error);
+      //     this.logout();
+      //   }
+      // } else {
+      //   this.logout();
+      // }
+      // this.isLoading = false;
     },
   },
 });

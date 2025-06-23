@@ -1,12 +1,18 @@
-/* @layer vuetify, base, components; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import "vuetify/styles/elements/_global.sass";
-@import "vuetify/styles/elements/_index.sass";
-@import "vuetify/styles/elements/_blockquote.sass";
-@import "vuetify/styles/elements/_global.sass";
-@import "vuetify/styles/generic/_animations.scss";
-@import "vuetify/styles/generic/_transitions.scss";
-@import "vuetify/styles/generic/_index.scss";
+/* Custom styles */
+@layer base {
+  html {
+    font-family: "Poppins", sans-serif;
+  }
+}
 
-@layer vuetify {
+@layer components {
+  /* Custom component styles can go here */
+}
+
+@layer utilities {
+  /* Custom utility styles can go here */
 }

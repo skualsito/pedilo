@@ -1,370 +1,576 @@
 <template>
-  <v-container fluid>
-    <v-row class="mb-4">
-      <v-col cols="12" class="flex justify-end">
-        <v-btn
-          color="primary"
+  <div class="space-y-6">
+    <!-- Header Section -->
+    <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-lg">
+      <div
+        class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
+      >
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">
+            Gestión de Productos
+          </h1>
+          <p class="text-gray-600">
+            Administra el catálogo de productos del sistema
+          </p>
+        </div>
+        <button
           @click="abrirFormularioNuevoProducto"
-          class="ms-auto"
+          class="bg-[#3e40bf] hover:bg-[#2d2e8f] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl flex items-center gap-2"
         >
-          <v-icon start icon="mdi-plus"></v-icon>
+          <MdiIcon name="Plus" class="w-5 h-5" />
           Nuevo Producto
-        </v-btn>
-      </v-col>
-    </v-row>
+        </button>
+      </div>
+    </div>
 
-    <v-data-table
-      :headers="headers"
-      :items="productos"
-      :items-per-page="5"
-      :search="busqueda"
-      class="elevation-1"
-    >
-      <template v-slot:top>
-        <v-text-field
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-600 text-sm font-medium">Total Productos</p>
+            <p class="text-3xl font-bold text-gray-900">
+              {{ productos.length }}
+            </p>
+          </div>
+          <div class="bg-purple-100 rounded-full p-3">
+            <MdiIcon name="Food" class="w-8 h-8 text-purple-600" />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-600 text-sm font-medium">Categorías</p>
+            <p class="text-3xl font-bold text-gray-900">
+              {{ categorias.length }}
+            </p>
+          </div>
+          <div class="bg-blue-100 rounded-full p-3">
+            <MdiIcon name="Tag" class="w-8 h-8 text-blue-600" />
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-gray-600 text-sm font-medium">Valor Total</p>
+            <p class="text-3xl font-bold text-gray-900">
+              ${{ valorTotalInventario }}
+            </p>
+          </div>
+          <div class="bg-green-100 rounded-full p-3">
+            <MdiIcon name="CashMultiple" class="w-8 h-8 text-green-600" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="bg-white rounded-2xl p-6 border border-gray-200 shadow-lg">
+      <div class="relative">
+        <MdiIcon name="Magnify" class="absolute left-4 text-gray-400 top-3.5" />
+        <input
           v-model="busqueda"
-          label="Buscar"
-          prepend-inner-icon="mdi-magnify"
-          single-line
-          hide-details
-          class="mb-4"
-        ></v-text-field>
-      </template>
+          type="text"
+          placeholder="Buscar productos..."
+          class="w-full bg-gray-50 border border-gray-300 rounded-xl pl-12 pr-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+        />
+      </div>
+    </div>
 
-      <template v-slot:[`item.imagen`]="{ item }">
-        <v-img
-          :src="item.imagen || 'https://via.placeholder.com/150'"
-          height="50"
-          width="50"
-          cover
-        ></v-img>
-      </template>
-
-      <template v-slot:[`item.acciones`]="{ item }">
-        <v-btn
-          size="x-small"
-          color="primary"
-          class="me-2"
-          icon
-          @click="verProducto(item)"
-        >
-          <v-icon>mdi-eye</v-icon>
-          <v-tooltip activator="parent" location="top">Ver</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="warning"
-          class="me-2"
-          icon
-          @click="editarProducto(item)"
-        >
-          <v-icon>mdi-pencil</v-icon>
-          <v-tooltip activator="parent" location="top">Editar</v-tooltip>
-        </v-btn>
-        <v-btn
-          size="x-small"
-          color="error"
-          class="me-2"
-          icon
-          @click="borrarProducto(item)"
-        >
-          <v-icon>mdi-delete</v-icon>
-          <v-tooltip activator="parent" location="top">Borrar</v-tooltip>
-        </v-btn>
-      </template>
-    </v-data-table>
-
-    <v-dialog
-      v-model="dialogoFormulario"
-      transition="dialog-bottom-transition"
-      fullscreen
-    >
-      <v-card>
-        <v-toolbar
-          dark
-          color="primary"
-          class="!fixed top-0 left-0 right-0 z-50"
-        >
-          <v-btn icon dark @click="cerrarFormulario">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>{{ formularioTitulo }}</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark text @click="guardarProducto">Guardar</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-card-text class="mt-16">
-          <v-container>
-            <v-form ref="formulario">
-              <v-row>
-                <v-col cols="12" sm="3">
-                  <v-row class="justify-center">
-                    <v-col cols="12" class="flex justify-center">
-                      <v-avatar size="150" class="mt-2">
-                        <v-img
-                          :src="
-                            previewImagen || 'https://via.placeholder.com/150'
-                          "
-                          cover
-                        ></v-img>
-                      </v-avatar>
-                    </v-col>
-                  </v-row>
-                </v-col>
-                <v-col cols="12" sm="9">
-                  <v-row>
-                    <v-col cols="12">
-                      <v-text-field
-                        v-model="productoEditado.nombre"
-                        label="Nombre"
-                        required
-                      ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="6">
-                      <v-select
-                        v-model="productoEditado.categoria"
-                        :items="categorias"
-                        label="Categoría"
-                        required
-                      >
-                        <template v-slot:append>
-                          <v-btn
-                            icon
-                            size="small"
-                            color="primary"
-                            class="me-1"
-                            @click="abrirModalCategoria('categoria', 'agregar')"
-                          >
-                            <v-icon>mdi-plus</v-icon>
-                          </v-btn>
-                          <v-btn
-                            icon
-                            size="small"
-                            color="warning"
-                            class="me-1"
-                            @click="abrirModalCategoria('categoria', 'editar')"
-                            :disabled="!productoEditado.categoria"
-                          >
-                            <v-icon>mdi-pencil</v-icon>
-                          </v-btn>
-                          <v-btn
-                            icon
-                            size="small"
-                            color="error"
-                            @click="borrarCategoria('categoria')"
-                            :disabled="!productoEditado.categoria"
-                          >
-                            <v-icon>mdi-delete</v-icon>
-                          </v-btn>
-                        </template>
-                      </v-select>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-select
-                        v-model="productoEditado.subcategoria"
-                        :items="subcategorias"
-                        label="Subcategoría"
-                        required
-                      >
-                        <template v-slot:append>
-                          <v-btn
-                            icon
-                            size="small"
-                            color="primary"
-                            class="me-1"
-                            @click="
-                              abrirModalCategoria('subcategoria', 'agregar')
-                            "
-                          >
-                            <v-icon>mdi-plus</v-icon>
-                          </v-btn>
-                          <v-btn
-                            icon
-                            size="small"
-                            color="warning"
-                            class="me-1"
-                            @click="
-                              abrirModalCategoria('subcategoria', 'editar')
-                            "
-                            :disabled="!productoEditado.subcategoria"
-                          >
-                            <v-icon>mdi-pencil</v-icon>
-                          </v-btn>
-                          <v-btn
-                            icon
-                            size="small"
-                            color="error"
-                            @click="borrarCategoria('subcategoria')"
-                            :disabled="!productoEditado.subcategoria"
-                          >
-                            <v-icon>mdi-delete</v-icon>
-                          </v-btn>
-                        </template>
-                      </v-select>
-                    </v-col>
-                    <v-col cols="12" sm="6" md="6">
-                      <v-text-field
-                        v-model="productoEditado.precio"
-                        label="Precio"
-                        type="number"
-                        prefix="$"
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="12" md="6">
-                      <v-file-input
-                        v-model="imagenSeleccionada"
-                        label="Imagen del producto"
-                        accept="image/*"
-                        @change="previsualizarImagen"
-                      ></v-file-input>
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12">
-                  <v-textarea
-                    v-model="productoEditado.descripcion"
-                    label="Descripción"
-                    required
-                  ></v-textarea>
-                </v-col>
-
-                <v-col cols="12">
-                  <v-data-table
-                    :headers="headerIngredientes"
-                    :items="productoEditado.ingredientes"
-                    class="elevation-1"
+    <!-- Products Table -->
+    <div class="bg-white rounded-3xl p-6 border border-gray-200 shadow-lg">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Lista de Productos</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-gray-200">
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">ID</th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Imagen
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Nombre
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Descripción
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Precio
+              </th>
+              <th class="text-left py-4 px-4 text-gray-700 font-medium">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="producto in productosFiltrados"
+              :key="producto.id"
+              class="border-b border-gray-100 hover:bg-gray-50 transition-colors duration-200"
+            >
+              <td class="py-4 px-4 text-gray-900 font-medium">
+                #{{ producto.id }}
+              </td>
+              <td class="py-4 px-4">
+                <div
+                  class="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 border border-gray-200"
+                >
+                  <img
+                    :src="producto.imagen || 'https://via.placeholder.com/150'"
+                    :alt="producto.nombre"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              </td>
+              <td class="py-4 px-4 text-gray-900 font-medium">
+                {{ producto.nombre }}
+              </td>
+              <td class="py-4 px-4 text-gray-600 max-w-xs truncate">
+                {{ producto.descripcion }}
+              </td>
+              <td class="py-4 px-4 text-gray-900 font-bold">
+                ${{ producto.precio }}
+              </td>
+              <td class="py-4 px-4">
+                <div class="flex items-center gap-2">
+                  <button
+                    @click="verProducto(producto)"
+                    class="bg-blue-100 hover:bg-blue-200 text-blue-700 hover:text-blue-800 p-2 rounded-lg transition-all duration-300"
+                    title="Ver"
                   >
-                    <template v-slot:top>
-                      <v-toolbar flat>
-                        <v-toolbar-title>Ingredientes</v-toolbar-title>
-                        <v-divider class="mx-4" inset vertical></v-divider>
-                        <v-spacer></v-spacer>
-                        <v-dialog v-model="dialogIngrediente" max-width="500px">
-                          <template v-slot:activator="{ props }">
-                            <v-btn
-                              color="primary"
-                              variant="elevated"
-                              class="mb-2"
-                              v-bind="props"
-                            >
-                              Nuevo Ingrediente
-                            </v-btn>
-                          </template>
-                          <v-card>
-                            <v-card-title>
-                              <span class="text-h5">{{
-                                formTitleIngrediente
-                              }}</span>
-                            </v-card-title>
-                            <v-card-text>
-                              <v-container>
-                                <v-row>
-                                  <v-col cols="12">
-                                    <v-text-field
-                                      v-model="editedIngrediente.nombre"
-                                      label="Nombre"
-                                    ></v-text-field>
-                                  </v-col>
-                                  <v-col cols="12">
-                                    <v-text-field
-                                      v-model="editedIngrediente.precio"
-                                      label="Precio"
-                                      prefix="$"
-                                      type="number"
-                                    ></v-text-field>
-                                  </v-col>
-                                </v-row>
-                              </v-container>
-                            </v-card-text>
-                            <v-card-actions>
-                              <v-spacer></v-spacer>
-                              <v-btn
-                                color="blue darken-1"
-                                text
-                                @click="closeIngrediente"
-                                >Cancelar</v-btn
-                              >
-                              <v-btn
-                                color="blue darken-1"
-                                text
-                                @click="saveIngrediente"
-                                >Guardar</v-btn
-                              >
-                            </v-card-actions>
-                          </v-card>
-                        </v-dialog>
-                      </v-toolbar>
-                    </template>
-                    <template v-slot:[`item.actions`]="{ item }">
-                      <v-btn
-                        size="x-small"
-                        color="warning"
-                        class="me-2"
-                        icon
-                        @click="editIngrediente(item)"
-                      >
-                        <v-icon>mdi-pencil</v-icon>
-                        <v-tooltip activator="parent" location="top"
-                          >Editar</v-tooltip
-                        >
-                      </v-btn>
-                      <v-btn
-                        size="x-small"
-                        color="error"
-                        class="me-2"
-                        icon
-                        @click="deleteIngrediente(item)"
-                      >
-                        <v-icon>mdi-delete</v-icon>
-                        <v-tooltip activator="parent" location="top"
-                          >Borrar</v-tooltip
-                        >
-                      </v-btn>
-                    </template>
-                  </v-data-table>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-container>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
+                    <MdiIcon name="Eye" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click="editarProducto(producto)"
+                    class="bg-yellow-100 hover:bg-yellow-200 text-yellow-700 hover:text-yellow-800 p-2 rounded-lg transition-all duration-300"
+                    title="Editar"
+                  >
+                    <MdiIcon name="Pencil" class="w-4 h-4" />
+                  </button>
+                  <button
+                    @click="borrarProducto(producto)"
+                    class="bg-red-100 hover:bg-red-200 text-red-700 hover:text-red-800 p-2 rounded-lg transition-all duration-300"
+                    title="Borrar"
+                  >
+                    <MdiIcon name="Delete" class="w-4 h-4" />
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <!-- Nuevo modal para categorías y subcategorías -->
-    <v-dialog v-model="dialogoCategoria" max-width="500px">
-      <v-card>
-        <v-card-title>
-          <span class="text-h5">{{ tituloModalCategoria }}</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="categoriaEditada"
-                  :label="labelModalCategoria"
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="cerrarModalCategoria"
-            >Cancelar</v-btn
+    <!-- Product Form Modal -->
+    <div
+      v-if="dialogoFormulario"
+      class="fixed inset-0 !mt-0 backdrop-blur-md bg-black/30 flex items-center justify-center z-50 p-4"
+    >
+      <div
+        class="bg-white rounded-3xl p-8 shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">
+            {{ formularioTitulo }}
+          </h2>
+          <button
+            @click="cerrarFormulario"
+            class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-all duration-300"
           >
-          <v-btn color="blue darken-1" text @click="guardarCategoria"
-            >Guardar</v-btn
+            <MdiIcon name="Close" :size="24" />
+          </button>
+        </div>
+
+        <form @submit.prevent="guardarProducto" class="space-y-6">
+          <!-- Image Upload Section -->
+          <div
+            class="bg-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg"
           >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-container>
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+              Imagen del Producto
+            </h3>
+            <div class="flex items-center gap-6">
+              <div
+                class="w-32 h-32 rounded-xl overflow-hidden bg-gray-200 border-2 border-gray-300"
+              >
+                <img
+                  :src="previewImagen || 'https://via.placeholder.com/150'"
+                  :alt="productoEditado.nombre"
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="flex-1">
+                <label class="block mb-2 text-gray-700 font-medium"
+                  >Seleccionar Imagen</label
+                >
+                <input
+                  type="file"
+                  accept="image/*"
+                  @change="previsualizarImagen"
+                  class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-700 transition-all duration-300"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Basic Info Section -->
+          <div
+            class="bg-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg"
+          >
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block mb-2 text-gray-700 font-medium"
+                  >Nombre</label
+                >
+                <input
+                  v-model="productoEditado.nombre"
+                  type="text"
+                  required
+                  class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+                  placeholder="Nombre del producto"
+                />
+              </div>
+
+              <div>
+                <label class="block mb-2 text-gray-700 font-medium"
+                  >Precio</label
+                >
+                <input
+                  v-model="productoEditado.precio"
+                  type="number"
+                  required
+                  class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+                  placeholder="0.00"
+                />
+              </div>
+            </div>
+
+            <!-- Categories Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block mb-2 text-gray-700 font-medium"
+                  >Categoría</label
+                >
+                <div class="flex gap-2">
+                  <select
+                    v-model="productoEditado.categoria"
+                    required
+                    class="flex-1 bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:border-purple-500 transition-all duration-300"
+                  >
+                    <option value="" class="text-gray-500">
+                      Seleccionar categoría
+                    </option>
+                    <option
+                      v-for="categoria in categorias"
+                      :key="categoria"
+                      :value="categoria"
+                      class="text-gray-700"
+                    >
+                      {{ categoria }}
+                    </option>
+                  </select>
+                  <button
+                    type="button"
+                    @click="abrirModalCategoria('categoria', 'agregar')"
+                    class="bg-green-500 hover:bg-green-600 text-white p-3 rounded-xl transition-all duration-300"
+                    title="Agregar categoría"
+                  >
+                    <MdiIcon name="Plus" class="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    @click="abrirModalCategoria('categoria', 'editar')"
+                    :disabled="!productoEditado.categoria"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    title="Editar categoría"
+                  >
+                    <MdiIcon name="Pencil" class="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    @click="borrarCategoria('categoria')"
+                    :disabled="!productoEditado.categoria"
+                    class="bg-red-500 hover:bg-red-600 text-white p-3 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    title="Borrar categoría"
+                  >
+                    <MdiIcon name="Delete" class="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="block mb-2 text-gray-700 font-medium"
+                  >Subcategoría</label
+                >
+                <div class="flex gap-2">
+                  <select
+                    v-model="productoEditado.subcategoria"
+                    required
+                    class="flex-1 bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 focus:outline-none focus:border-purple-500 transition-all duration-300"
+                  >
+                    <option value="" class="text-gray-500">
+                      Seleccionar subcategoría
+                    </option>
+                    <option
+                      v-for="subcategoria in subcategorias"
+                      :key="subcategoria"
+                      :value="subcategoria"
+                      class="text-gray-700"
+                    >
+                      {{ subcategoria }}
+                    </option>
+                  </select>
+                  <button
+                    type="button"
+                    @click="abrirModalCategoria('subcategoria', 'agregar')"
+                    class="bg-green-500 hover:bg-green-600 text-white p-3 rounded-xl transition-all duration-300"
+                    title="Agregar subcategoría"
+                  >
+                    <MdiIcon name="Plus" class="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    @click="abrirModalCategoria('subcategoria', 'editar')"
+                    :disabled="!productoEditado.subcategoria"
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white p-3 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    title="Editar subcategoría"
+                  >
+                    <MdiIcon name="Pencil" class="w-5 h-5" />
+                  </button>
+                  <button
+                    type="button"
+                    @click="borrarCategoria('subcategoria')"
+                    :disabled="!productoEditado.subcategoria"
+                    class="bg-red-500 hover:bg-red-600 text-white p-3 rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    title="Borrar subcategoría"
+                  >
+                    <MdiIcon name="Delete" class="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Description Section -->
+            <div>
+              <label class="block mb-2 text-gray-700 font-medium"
+                >Descripción</label
+              >
+              <textarea
+                v-model="productoEditado.descripcion"
+                required
+                rows="4"
+                class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300 resize-none"
+                placeholder="Descripción del producto..."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Ingredients Section -->
+          <div
+            class="bg-gray-50 rounded-2xl p-6 border border-gray-200 shadow-lg"
+          >
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-lg font-semibold text-gray-900">Ingredientes</h3>
+              <button
+                type="button"
+                @click="abrirModalIngrediente"
+                class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-xl transition-all duration-300 flex items-center gap-2"
+              >
+                <MdiIcon name="Plus" class="w-4 h-4" />
+                Nuevo Ingrediente
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full">
+                <thead>
+                  <tr class="border-b border-gray-200">
+                    <th class="text-left py-3 px-4 text-gray-700 font-medium">
+                      Nombre
+                    </th>
+                    <th class="text-left py-3 px-4 text-gray-700 font-medium">
+                      Precio
+                    </th>
+                    <th class="text-left py-3 px-4 text-gray-700 font-medium">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(ingrediente, index) in productoEditado.ingredientes"
+                    :key="index"
+                    class="border-b border-gray-100"
+                  >
+                    <td class="py-3 px-4 text-gray-700">
+                      {{ ingrediente.nombre }}
+                    </td>
+                    <td class="py-3 px-4 text-gray-900 font-bold">
+                      ${{ ingrediente.precio }}
+                    </td>
+                    <td class="py-3 px-4">
+                      <div class="flex items-center gap-2">
+                        <button
+                          type="button"
+                          @click="editIngrediente(ingrediente)"
+                          class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-lg transition-all duration-300"
+                          title="Editar"
+                        >
+                          <MdiIcon name="Pencil" class="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          @click="deleteIngrediente(ingrediente)"
+                          class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg transition-all duration-300"
+                          title="Borrar"
+                        >
+                          <MdiIcon name="Delete" class="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="flex gap-3 pt-6">
+            <button
+              type="button"
+              @click="cerrarFormulario"
+              class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-xl border border-gray-300 transition-all duration-300 font-medium"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="flex-1 bg-[#3e40bf] hover:bg-[#2d2e8f] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+            >
+              <MdiIcon name="ContentSave" class="w-5 h-5" />
+              Guardar Producto
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Ingredient Modal -->
+    <div
+      v-if="dialogIngrediente"
+      class="fixed inset-0 !mt-0 backdrop-blur-md bg-black/30 flex items-center justify-center z-50 p-4"
+    >
+      <div class="bg-white rounded-3xl p-8 shadow-2xl w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">
+            {{ formTitleIngrediente }}
+          </h2>
+          <button
+            @click="closeIngrediente"
+            class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-all duration-300"
+          >
+            <MdiIcon name="Close" :size="24" />
+          </button>
+        </div>
+
+        <form @submit.prevent="saveIngrediente" class="space-y-6">
+          <div>
+            <label class="block mb-2 text-gray-700 font-medium">Nombre</label>
+            <input
+              v-model="editedIngrediente.nombre"
+              type="text"
+              required
+              class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+              placeholder="Nombre del ingrediente"
+            />
+          </div>
+
+          <div>
+            <label class="block mb-2 text-gray-700 font-medium">Precio</label>
+            <input
+              v-model="editedIngrediente.precio"
+              type="number"
+              required
+              class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+              placeholder="0.00"
+            />
+          </div>
+
+          <div class="flex gap-3 pt-4">
+            <button
+              type="button"
+              @click="closeIngrediente"
+              class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-xl border border-gray-300 transition-all duration-300 font-medium"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="flex-1 bg-[#3e40bf] hover:bg-[#2d2e8f] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div
+      v-if="dialogoCategoria"
+      class="fixed inset-0 !mt-0 backdrop-blur-md bg-black/30 flex items-center justify-center z-50 p-4"
+    >
+      <div class="bg-white rounded-3xl p-8 shadow-2xl w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-900">
+            {{ tituloModalCategoria }}
+          </h2>
+          <button
+            @click="cerrarModalCategoria"
+            class="text-gray-500 hover:text-gray-700 p-2 rounded-full hover:bg-gray-100 transition-all duration-300"
+          >
+            <MdiIcon name="Close" :size="24" />
+          </button>
+        </div>
+
+        <form @submit.prevent="guardarCategoria" class="space-y-6">
+          <div>
+            <label class="block mb-2 text-gray-700 font-medium">{{
+              labelModalCategoria
+            }}</label>
+            <input
+              v-model="categoriaEditada"
+              type="text"
+              required
+              class="w-full bg-white border border-gray-300 rounded-xl px-4 py-3 text-gray-700 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-all duration-300"
+              :placeholder="labelModalCategoria"
+            />
+          </div>
+
+          <div class="flex gap-3 pt-4">
+            <button
+              type="button"
+              @click="cerrarModalCategoria"
+              class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-3 rounded-xl border border-gray-300 transition-all duration-300 font-medium"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="flex-1 bg-[#3e40bf] hover:bg-[#2d2e8f] text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -375,35 +581,42 @@ definePageMeta({
     title: "Productos",
   },
 });
-import { ref, reactive, computed } from "vue";
 
-const headers = [
-  { title: "ID", key: "id" },
-  { title: "Imagen", key: "imagen" },
-  { title: "Nombre", key: "nombre" },
-  { title: "Descripción", key: "descripcion" },
-  { title: "Precio", key: "precio" },
-  { title: "Acciones", key: "acciones", sortable: false, align: "end" },
-];
+import { ref, reactive, computed, nextTick } from "vue";
 
 const productos = ref([
   {
     id: 1,
-    nombre: "Producto 1",
-    descripcion: "Descripción del producto 1",
-    precio: 100,
+    nombre: "Hamburguesa Clásica",
+    descripcion: "Deliciosa hamburguesa con carne, lechuga, tomate y queso",
+    precio: 1200,
     imagen: "https://via.placeholder.com/150",
-    ingredientes: [],
+    categoria: "Hamburguesas",
+    subcategoria: "Clásicas",
+    ingredientes: [
+      { nombre: "Pan de hamburguesa", precio: 200 },
+      { nombre: "Carne de res", precio: 800 },
+      { nombre: "Lechuga", precio: 50 },
+      { nombre: "Tomate", precio: 50 },
+      { nombre: "Queso", precio: 100 },
+    ],
   },
   {
     id: 2,
-    nombre: "Producto 2",
-    descripcion: "Descripción del producto 2",
-    precio: 150,
+    nombre: "Pizza Margherita",
+    descripcion: "Pizza tradicional con salsa de tomate, mozzarella y albahaca",
+    precio: 1800,
     imagen: "https://via.placeholder.com/150",
-    ingredientes: [],
+    categoria: "Pizzas",
+    subcategoria: "Tradicionales",
+    ingredientes: [
+      { nombre: "Masa de pizza", precio: 300 },
+      { nombre: "Salsa de tomate", precio: 200 },
+      { nombre: "Mozzarella", precio: 800 },
+      { nombre: "Albahaca", precio: 100 },
+      { nombre: "Aceite de oliva", precio: 50 },
+    ],
   },
-  // Añade más productos aquí
 ]);
 
 const dialogoFormulario = ref(false);
@@ -414,20 +627,29 @@ const productoEditado = reactive({
   descripcion: "",
   precio: 0,
   imagen: "",
+  categoria: "",
+  subcategoria: "",
+  ingredientes: [],
 });
 
 const imagenSeleccionada = ref(null);
 const previewImagen = ref(null);
-
 const busqueda = ref("");
 
-const categorias = ref(["Categoría 1", "Categoría 2", "Categoría 3"]);
-const subcategorias = ref([
-  "Subcategoría 1",
-  "Subcategoría 2",
-  "Subcategoría 3",
+const categorias = ref([
+  "Hamburguesas",
+  "Pizzas",
+  "Bebidas",
+  "Postres",
+  "Ensaladas",
 ]);
-const sucursales = ref(["Sucursal A", "Sucursal B", "Sucursal C"]);
+const subcategorias = ref([
+  "Clásicas",
+  "Especiales",
+  "Vegetarianas",
+  "Tradicionales",
+  "Gourmet",
+]);
 
 const headerIngredientes = [
   { title: "Nombre", key: "nombre" },
@@ -446,6 +668,22 @@ const formTitleIngrediente = computed(() => {
   return editedIndex.value === -1 ? "Nuevo Ingrediente" : "Editar Ingrediente";
 });
 
+const productosFiltrados = computed(() => {
+  if (!busqueda.value) return productos.value;
+  return productos.value.filter(
+    (producto) =>
+      producto.nombre.toLowerCase().includes(busqueda.value.toLowerCase()) ||
+      producto.descripcion.toLowerCase().includes(busqueda.value.toLowerCase())
+  );
+});
+
+const valorTotalInventario = computed(() => {
+  return productos.value.reduce(
+    (total, producto) => total + producto.precio,
+    0
+  );
+});
+
 const closeIngrediente = () => {
   dialogIngrediente.value = false;
   nextTick(() => {
@@ -453,6 +691,13 @@ const closeIngrediente = () => {
     editedIngrediente.precio = "";
     editedIndex.value = -1;
   });
+};
+
+const abrirModalIngrediente = () => {
+  editedIngrediente.nombre = "";
+  editedIngrediente.precio = "";
+  editedIndex.value = -1;
+  dialogIngrediente.value = true;
 };
 
 const saveIngrediente = () => {
@@ -464,15 +709,6 @@ const saveIngrediente = () => {
   } else {
     if (editedIngrediente.nombre && editedIngrediente.precio) {
       productoEditado.ingredientes.push({ ...editedIngrediente });
-      console.log("Ingrediente añadido:", editedIngrediente);
-      console.log(
-        "Lista actualizada de ingredientes:",
-        productoEditado.ingredientes
-      );
-    } else {
-      console.warn(
-        "No se puede añadir un ingrediente con nombre o precio vacíos"
-      );
     }
   }
   closeIngrediente();
@@ -499,6 +735,8 @@ const abrirFormularioNuevoProducto = () => {
   productoEditado.descripcion = "";
   productoEditado.precio = 0;
   productoEditado.imagen = "";
+  productoEditado.categoria = "";
+  productoEditado.subcategoria = "";
   productoEditado.ingredientes = [];
   imagenSeleccionada.value = null;
   previewImagen.value = null;
@@ -506,7 +744,6 @@ const abrirFormularioNuevoProducto = () => {
 };
 
 const verProducto = (item) => {
-  // Implementa la lógica para ver el producto
   console.log("Ver producto:", item);
 };
 
@@ -517,14 +754,18 @@ const editarProducto = (item) => {
   productoEditado.descripcion = item.descripcion;
   productoEditado.precio = item.precio;
   productoEditado.imagen = item.imagen;
-  productoEditado.ingredientes = item.ingredientes;
+  productoEditado.categoria = item.categoria || "";
+  productoEditado.subcategoria = item.subcategoria || "";
+  productoEditado.ingredientes = item.ingredientes || [];
   previewImagen.value = item.imagen;
   dialogoFormulario.value = true;
 };
 
 const borrarProducto = (item) => {
-  // Implementa la lógica para borrar el producto
-  console.log("Borrar producto:", item);
+  if (confirm("¿Estás seguro de que quieres eliminar este producto?")) {
+    const index = productos.value.indexOf(item);
+    productos.value.splice(index, 1);
+  }
 };
 
 const cerrarFormulario = () => {
@@ -532,8 +773,20 @@ const cerrarFormulario = () => {
 };
 
 const guardarProducto = () => {
-  // Implementa la lógica para guardar el producto
-  console.log("Guardar producto:", productoEditado);
+  if (productoEditado.id) {
+    // Editar producto existente
+    const index = productos.value.findIndex((p) => p.id === productoEditado.id);
+    if (index !== -1) {
+      productos.value[index] = { ...productoEditado };
+    }
+  } else {
+    // Crear nuevo producto
+    const nuevoProducto = {
+      ...productoEditado,
+      id: productos.value.length + 1,
+    };
+    productos.value.push(nuevoProducto);
+  }
   cerrarFormulario();
 };
 
@@ -569,7 +822,6 @@ const labelModalCategoria = computed(() => {
 
 const abrirModalCategoria = (tipo, accion) => {
   if (accion === "editar" && !productoEditado[tipo]) {
-    // No abrir el modal si no hay categoría/subcategoría seleccionada
     return;
   }
 
@@ -612,7 +864,6 @@ const guardarCategoria = () => {
 
 const borrarCategoria = (tipo) => {
   if (!productoEditado[tipo]) {
-    // No hacer nada si no hay categoría/subcategoría seleccionada
     return;
   }
 
